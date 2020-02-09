@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/ic_person"
+            android:title="Логин"/>
+        <item
+            android:id="@+id/nav_beginning"
+            android:icon="@drawable/ic_person"
+            android:title="Начало"/>
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_person"
+            android:title="Профил"/>
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_person"
+            android:title="Map"/>
+        <item
+            android:id="@+id/nav_friends"
+            android:icon="@drawable/ic_person"
+            android:title="Friends"/>
+    </group>
+
+
+    <item android:title="Account Settings">
+        <menu>
+            <item
+                android:id="@+id/nav_update"
+                android:icon="@drawable/ic_person"
+                android:title="Update Profile"/>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_person"
+                android:title="Sign Out"/>
+        </menu>
+    </item>
+</menu>
