@@ -44,10 +44,7 @@ class HomeFragment : Fragment() {
         })
 
 
-        val scanbtn: Button = root.findViewById(R.id.scanbtn)
-        scanbtn.setOnClickListener {
-            scanbarc()
-        }
+
 
         var levell = (activity as Main2Activity).acc.level
 
@@ -81,17 +78,6 @@ class HomeFragment : Fragment() {
                   .into(imageView)
       */
         return root
-    }
-
-    fun scanbarc()
-    {
-
-        IntentIntegrator
-            .forSupportFragment(this)
-            .setOrientationLocked(false)
-            .setBeepEnabled(false)
-            .initiateScan()
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

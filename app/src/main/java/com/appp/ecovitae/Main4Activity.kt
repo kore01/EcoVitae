@@ -22,32 +22,29 @@ class Main4Activity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-        
-        var btn = findViewById<Button>(R.id.btn)
-        btn.setOnClickListener {
 
             IntentIntegrator(this)
                 .setOrientationLocked(false)
                 .setBeepEnabled(false)
                 .initiateScan()
-        }
-
-
-
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        //super.onActivityResult(requestCode, resultCode, data)
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        Log.i("on activity result", "result")
-        var result: IntentResult? =
+        Log.i("scaannnnn", "scan")
+        val result: IntentResult? =
             IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
 
         if (result != null) {
 
             if (result.contents != null) {
-            //    scannedResult = result.contents
+
+                Log.i("scannn", result.contents)
+
+                val intent = Intent(this, Main2Activity::class.java)
+                intent.putExtra("barcode", result.contents)
+                startActivity(intent)
 
             } else {
 

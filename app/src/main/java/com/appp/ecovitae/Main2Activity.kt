@@ -1,12 +1,14 @@
 package com.appp.ecovitae
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -31,10 +33,12 @@ import java.util.*
 import kotlin.properties.Delegates
 
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.dial_throw_in.*
 
 class Main2Activity : AppCompatActivity(), Observer {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    var myDialog: Dialog? = null
 
     var observed = false
     var newsss: Int by Delegates.observable(0) { property, oldValue, newValue ->
@@ -152,6 +156,11 @@ class Main2Activity : AppCompatActivity(), Observer {
                 }
                 Log.d("D", "onButtonClickAnimationEnd| index: $index")
             }
+
+
+
+
+
         }
 
 
@@ -182,6 +191,64 @@ class Main2Activity : AppCompatActivity(), Observer {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        myDialog = Dialog(this)
+        val ss = intent.getStringExtra("barcode")
+        if(ss!=null){Log.i("sss", ss)
+        openDialThrow(ss)
+        }
+
+    }
+
+
+    fun openDialThrow(barc: String)
+    {
+        myDialog!!.setContentView(R.layout.dial_throw_in)
+
+        val txtclose: TextView = myDialog!!.findViewById(R.id.txtclose)
+        txtclose.text = "X"
+        txtclose.setOnClickListener {
+            myDialog!!.dismiss()
+        }
+
+        var btnthrow : Button = myDialog!!.findViewById(R.id.throwout)
+        btnthrow.setOnClickListener {
+            throwin()
+            myDialog!!.dismiss()
+        }
+
+
+        var givenstring = barc
+        val rootRef = FirebaseDatabase.getInstance().reference
+        val ordersRef = rootRef.child("Barcode").orderByKey().startAt(givenstring).limitToFirst(1)
+        Log.i("givenstring", givenstring)
+        val valueEventListener = object : ValueEventListener {
+            @SuppressLint("RestrictedApi")
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                for (ds in dataSnapshot.children) {
+                    val packaging = ds.child("packaging").getValue(String::class.java)
+                    val name = ds.child("product_name").getValue(String::class.java)
+                    Log.i("here it issssss", name + "fdsafas" + "packaging: " + packaging)
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.i("fuck", "opaaaaaa")
+                //  Log.d(TAG, databaseError.getMessage()) //Don't ignore errors!
+            }
+        }
+        ordersRef.addListenerForSingleValueEvent(valueEventListener)
+
+
+
+        myDialog!!.show()
+    }
+
+    fun throwin()
+    {
+        acc.points = acc.points!! + 5
+        acc.coins = acc.coins!! + 5
+        updateacc()
     }
 
     override fun onStart() {
@@ -223,66 +290,13 @@ class Main2Activity : AppCompatActivity(), Observer {
     fun barcodescan() {
         Log.i("barcode scan", "barcode")
 
-        //val intent = Intent(this, Main4Activity::class.java)
-        //startActivity(intent)
-
-
-        run {
-            IntentIntegrator(this)
-                .setOrientationLocked(false)
-                .setBeepEnabled(false)
-                .initiateScan()
-        }
-
-
+        val intent = Intent(this, Main4Activity::class.java)
+        startActivity(intent)
         Log.i("initiated scan", "scan")
     }
 
-    /*
-        public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-            Log.i("scaannnnn", "scan")
-            val result: IntentResult? =
-                IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-
-            if (result != null) {
-
-                if (result.contents != null) {
-                    barcodenumb(result.contents.toString())
-
-
-                    Log.i("scannn", result.contents)
-                } else {
-
-                }
-            } else {
-                super.onActivityResult(requestCode, resultCode, data)
-            }
-        }
-    */
-
     var scannedResult: String = ""
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        //super.onActivityResult(requestCode, resultCode, data)
-
-        Log.i("on activity result", "result")
-        var result: IntentResult? =
-            IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-
-        if (result != null) {
-
-            if (result.contents != null) {
-                scannedResult = result.contents
-
-            } else {
-
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
-        }
-    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         Log.i("on save", "save")
@@ -320,6 +334,8 @@ class Main2Activity : AppCompatActivity(), Observer {
                     acc.points = acc.points!! + 5
                     acc.coins = acc.coins!! + 5
                     updateacc()
+
+
                     //Log.d(TAG, username)
                 }
             }
@@ -382,7 +398,6 @@ class Main2Activity : AppCompatActivity(), Observer {
         Log.i("users", users.size.toString())
 
         val navView: NavigationView = findViewById(R.id.nav_view)
-        Toast.makeText(this, "fdafda", Toast.LENGTH_LONG).show()
 
 
         if (FirebaseAuth.getInstance().currentUser?.email.toString() != "") signinacc(FirebaseAuth.getInstance().currentUser?.email.toString())
