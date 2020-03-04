@@ -18,16 +18,16 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
+    <string name="menu_home">Eco Vitae</string>
+    <string name="menu_gallery">Карта</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
+    <string name="menu_tools">Профил</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
     <string name="menu_map">Map</string>
     <string name="menu_newacc">Създайте нов акаунт</string>
     <string name="menu_profile">Профил</string>
-    <string name="menu_news">Novini</string>
+    <string name="menu_news">Новини</string>
     <string name="title_activity_main4">Main4Activity</string>
 
 

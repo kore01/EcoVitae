@@ -61,7 +61,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapViewModel =
             ViewModelProviders.of(this).get(MapViewModel::class.java)
         val root = inflater.inflate(layout.fragment_map, container, false)
-        val textView: TextView = root.findViewById(R.id.text_gallery)
         var upd: Button = root.findViewById(R.id.update)
         var sel: Button = root.findViewById(R.id.select)
         var add: ImageButton = root.findViewById(R.id.add)
@@ -70,6 +69,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         var men: LinearLayout = root.findViewById(R.id.ll)
         lv = root.findViewById(R.id.lv)
 
+        //filtbtn.visibility = View.GONE
         myDialog = Dialog(context!!)
 
         Log.i("fdasfas", "cat")
@@ -84,6 +84,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         //
         myacc = (activity as Main2Activity).acc
         Log.i("account", myacc!!.comp.toString() + "fdaskfjc")
+
 
         if (myacc!!.comp.toString() == "") {
             add.visibility = View.GONE
@@ -145,9 +146,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             CustomAdapter(context!!, modelArrayList!!)
         Log.i("modelarraylist", modelArrayList!!.size.toString() + "fdasfa")
         lv!!.adapter = customAdapter
-
-
-
 
         return root
     }

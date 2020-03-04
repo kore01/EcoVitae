@@ -5,32 +5,70 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/title"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="TextView"
-        android:textAppearance="@style/title" />
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/side_nav_bar" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textAppearance="@style/txt_expandable" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="40px" />
 
-    <TextView
-        android:id="@+id/tags"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textAppearance="@style/smolgrey" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/side_nav_bar" />
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/Widget.AppCompat.TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="TextView"
+                android:textAppearance="@style/title" />
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textAppearance="@style/txt_expandable" />
+
+            <TextView
+                android:id="@+id/tags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textAppearance="@style/smolgrey" />
+
+            <TextView
+                android:id="@+id/title2"
+                style="@style/Widget.AppCompat.TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Други новини"
+                android:textAppearance="@style/title" />
+
+            <ListView
+                android:id="@+id/recyc_view"
+
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
+
+            </ListView>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

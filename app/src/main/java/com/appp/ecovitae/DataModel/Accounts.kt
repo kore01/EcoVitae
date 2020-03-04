@@ -12,6 +12,7 @@ class Accounts (snapshot: DataSnapshot)
     var email: String ?= ""
     var bin: String ?= ""
     var comp: String ?= ""
+    var rate: String ?= ""
 
 
 
@@ -26,6 +27,7 @@ class Accounts (snapshot: DataSnapshot)
             email = data["email"] as String
             bin = data["bin"] as String
             comp = data["company"] as String
+            rate = data["rating"] as String
             //long = data["longitude"] as String
             //lati = data["latitude"] as String
 

@@ -6,4 +6,5 @@ class UploadClass {
     var email: String ?= ""
     var bin: String ?= "0"
     var company: String ?= ""
+    var rating: String ?= "0"
 }

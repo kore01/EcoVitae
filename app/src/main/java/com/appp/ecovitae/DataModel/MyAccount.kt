@@ -8,4 +8,5 @@ class MyAccount {
     var bin: Int ?= 0
     var comp: String ?= ""
     var level: Int ?= 0
+    var rate: Int ?= 0
 }

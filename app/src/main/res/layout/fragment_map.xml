@@ -87,7 +87,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <ImageButton
             android:id="@+id/filter"
@@ -95,6 +96,7 @@
             android:layout_height="40dp"
             android:layout_margin="10dp"
             android:background="#2700BCD4"
+            android:visibility="visible"
             app:srcCompat="@drawable/ic_filter" />
 
         <Space
@@ -107,6 +109,7 @@
             android:layout_height="40dp"
             android:layout_margin="10dp"
             android:background="#2700BCD4"
+            android:visibility="visible"
             app:srcCompat="@drawable/ic_add" />
     </LinearLayout>
 

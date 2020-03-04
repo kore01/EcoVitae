@@ -356,6 +356,8 @@ class Main2Activity : AppCompatActivity(), Observer {
             .setValue(acc.points.toString())
         firebaseData.child("Users").child(acc.id.toString()).child("bin")
             .setValue(acc.bin.toString())
+        firebaseData.child("Users").child(acc.id.toString()).child("rating")
+            .setValue(acc.rate.toString())
     }
 
 
@@ -450,6 +452,7 @@ class Main2Activity : AppCompatActivity(), Observer {
                     acc.coins = ds.child("coins").getValue(String::class.java)?.toInt()
                     acc.points = ds.child("points").getValue(String::class.java)?.toInt()
                     acc.bin = ds.child("bin").getValue(String::class.java)?.toInt()
+                    acc.rate = ds.child("rating").getValue(String::class.java)?.toInt()
                     var num = ds.child("company").getValue(String::class.java)
                     Log.i("companiiiies", num.toString())
                     var str: String = ""

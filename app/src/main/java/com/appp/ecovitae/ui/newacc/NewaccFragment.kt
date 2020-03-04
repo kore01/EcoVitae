@@ -133,11 +133,8 @@ class NewaccFragment : Fragment() {
         var password = etPassword?.text.toString()
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)
         ) {
-            Log.i("fuck this", "fuck that")
             //mProgressBar!!.setMessage("Регистриране на потребител...")
             //mProgressBar!!.show()
-            Log.i("fucked", "fuck")
-            Log.i("text ", email + " fdasfdas")
 
             if (!email.isEmpty() && !password.isEmpty()) {
                 mAuth!!.createUserWithEmailAndPassword(email, password)
@@ -173,11 +170,14 @@ class NewaccFragment : Fragment() {
         acc.coins = 0
         acc.bin = 0
         acc.points = 0
+        acc.rate = 0
         acc.comp = ""
         newAcc.bin = "0"
         newAcc.coins = "0"
         newAcc.points = "0"
+        newAcc.rating = "0"
         newAcc.email = acc.email
+
         newAcc.company = acc.comp
 
         firebaseData.child("Users").child(key!!).setValue(newAcc)
@@ -208,6 +208,7 @@ class NewaccFragment : Fragment() {
                     acc.email = ds.child("email").getValue(String::class.java)
                     acc.id = ds.key
                     acc.coins = ds.child("coins").getValue(String::class.java)?.toInt()
+                    acc.rate = ds.child("rating").getValue(String::class.java)?.toInt()
                     acc.points = ds.child("points").getValue(String::class.java)?.toInt()
                     acc.bin = ds.child("bin").getValue(String::class.java)?.toInt()
                     //Log.i("companiiiies", i.comp)
