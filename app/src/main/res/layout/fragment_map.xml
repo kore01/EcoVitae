@@ -111,6 +111,11 @@
             android:background="#2700BCD4"
             android:visibility="visible"
             app:srcCompat="@drawable/ic_add" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

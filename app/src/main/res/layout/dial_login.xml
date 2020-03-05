@@ -92,7 +92,6 @@
         android:layout_marginRight="15dp"
         android:layout_weight="1"
         android:paddingTop="10dp"
-        android:text="@string/betterfunc"
         android:textAllCaps="false"
         />
 

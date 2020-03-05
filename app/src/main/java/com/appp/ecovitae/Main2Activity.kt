@@ -149,7 +149,7 @@ class Main2Activity : AppCompatActivity(), Observer {
                 }
                 if (index == 3) {
                     Log.i("index", "profile")
-                    //navController.navigate(R.id.nav_gallery)
+                    navController.navigate(R.id.nav_tools)
                 }
                 if (index == 4) {
                     navController.navigate(R.id.nav_home)
@@ -440,7 +440,6 @@ class Main2Activity : AppCompatActivity(), Observer {
         val valueEventListener = object : ValueEventListener {
             @SuppressLint("RestrictedApi")
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-
 
                 Log.i("onDataChange", user)
                 for (ds in dataSnapshot.children) {

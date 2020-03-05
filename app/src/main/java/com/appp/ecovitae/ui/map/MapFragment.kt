@@ -88,6 +88,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         if (myacc!!.comp.toString() == "") {
             add.visibility = View.GONE
+            filtbtn.visibility = View.VISIBLE
         }
 
         upd.setOnClickListener {

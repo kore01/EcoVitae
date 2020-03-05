@@ -15,17 +15,25 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.androidnetworking.AndroidNetworking
+import com.androidnetworking.common.Priority
+import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.JSONArrayRequestListener
 import com.appp.ecovitae.DataModel.MyAccount
 import com.appp.ecovitae.DataModel.UploadClass
 import com.appp.ecovitae.Main2Activity
 import com.appp.ecovitae.R
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.CommonStatusCodes
+import com.google.android.gms.safetynet.SafetyNet
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.synnapps.carouselview.CarouselView
 import com.synnapps.carouselview.ImageListener
+import org.json.JSONArray
 
-class NewaccFragment : Fragment() {
+class NewaccFragment : Fragment(){
 
     private lateinit var newaccModel: NewaccModel
 
@@ -43,6 +51,9 @@ class NewaccFragment : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth
 
     private lateinit var carouselView: CarouselView
+
+    var TAG = "MainActivity2"
+    private var SITE_KEY = "6Lemy94UAAAAANJydwzCy04m_9IQQn9swHZiYWsJ"
 
     var sampleImages = intArrayOf(
         R.drawable.ic_add,
@@ -78,15 +89,56 @@ class NewaccFragment : Fragment() {
         mAuth = FirebaseAuth.getInstance()
 
 
+
+
         val btn2: Button = root.findViewById(R.id.btn_register)
         btn2.setOnClickListener {
-            //   if(SignIn())
-            SignInEmail()
+
+            SafetyNet.getClient(activity as Main2Activity).verifyWithRecaptcha(SITE_KEY)
+                .addOnSuccessListener(activity as Main2Activity) { response ->
+                    if (!response.tokenResult.isEmpty()) {
+                        Log.i("response",  "responded")
+                        handleVerify(response.tokenResult)
+                    }
+                }
+                .addOnFailureListener(activity as Main2Activity) { e ->
+                    if (e is ApiException) {
+                        Log.d(TAG,("Error message: " + CommonStatusCodes.getStatusCodeString(e.statusCode)))
+                    } else {
+                        Log.d(TAG, "Unknown type of error: " + e.message)
+                    }
+                }
+
+            //
+            // SignInEmail()
         }
         //  configureGoogleSignIn()
         firebaseAuth = FirebaseAuth.getInstance()
 
         return root
+    }
+
+    protected fun handleVerify(responseToken: String) {
+        //it is google recaptcha siteverify server
+        //you can place your server url
+        SignInEmail()
+        val url = "https://www.google.com/recaptcha/api/siteverify"
+        AndroidNetworking.get(url)
+            .addHeaders("token", responseToken)
+            .setTag("MY_NETWORK_CALL")
+            .setPriority(Priority.LOW)
+            .build()
+            .getAsJSONArray(object : JSONArrayRequestListener {
+                override fun onResponse(response: JSONArray) {
+                    Log.i("responded", "yeah")
+
+                    // do anything with response
+                }
+
+                override fun onError(error: ANError) {
+                    // handle error
+                }
+            })
     }
 
     private lateinit var auth: FirebaseAuth

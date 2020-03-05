@@ -1,16 +1,15 @@
 <resources>
-    <string name="app_name">EcoVitae</string>
+    <string name="app_name">Eco Vitae</string>
     <string name="title_activity_maps">Map</string>
     <string name="Toolbar_title">Eco Vitae</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="create_act">Създайте акаунт</string>
-    <string name="betterfunc">Ne]o?</string>
     <string name="googlesuccessful">Успешен вход</string>
     <string name="googlenotsuccessful">Неуспешен вход</string>
     <string name="title_activity_profile">Profile</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="title_activity_main3">Main3Activity</string>
+    <string name="title_activity_main2">Eco Vitae</string>
+    <string name="title_activity_main3">Eco Vitae</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
