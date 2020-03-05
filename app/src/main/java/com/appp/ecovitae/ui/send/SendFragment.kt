@@ -12,7 +12,7 @@ import com.appp.ecovitae.R
 
 class SendFragment : Fragment() {
 
-    private lateinit var sendViewModel: SendViewModel
+    private lateinit var sendViewModel: ShopViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,7 +20,7 @@ class SendFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         sendViewModel =
-            ViewModelProviders.of(this).get(SendViewModel::class.java)
+            ViewModelProviders.of(this).get(ShopViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_send, container, false)
         val textView: TextView = root.findViewById(R.id.text_send)
         sendViewModel.text.observe(this, Observer {

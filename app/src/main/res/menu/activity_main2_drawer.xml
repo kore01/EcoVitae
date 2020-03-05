@@ -24,16 +24,31 @@
             />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Информация">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_share" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/menu_send" />
+
+            <item
+                android:id="@+id/nav_tips"
+                android:icon="@drawable/ic_menu_tips"
+                android:title="@string/menu_tips" />
+
+        </menu>
+    </item>
+
+    <item android:title="Бонуси и партньори">
+        <menu>
+            <item
+                android:id="@+id/nav_shop"
+                android:icon="@drawable/ic_menu_shop"
+                android:title="@string/menu_shop" />
+            <item
+                android:id="@+id/nav_bonus"
+                android:icon="@drawable/ic_menu_bonus"
+                android:title="@string/menu_bonus" />
         </menu>
     </item>
 

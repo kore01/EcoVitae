@@ -13,14 +13,13 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONArrayRequestListener
-import com.appp.ecovitae.DataModel.MyAccount
-import com.appp.ecovitae.DataModel.UploadClass
+import com.appp.ecovitae.DataModel.Accounts.MyAccount
+import com.appp.ecovitae.DataModel.Accounts.UploadClass
 import com.appp.ecovitae.Main2Activity
 import com.appp.ecovitae.R
 import com.google.android.gms.common.api.ApiException
@@ -178,7 +177,8 @@ class NewaccFragment : Fragment(){
             }
     }
 
-    var acc: MyAccount = MyAccount()
+    var acc: MyAccount =
+        MyAccount()
 
     private fun createNewAccount() {
         var email = etEmail?.text.toString()

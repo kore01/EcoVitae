@@ -14,6 +14,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.appp.ecovitae.DataModel.*
+import com.appp.ecovitae.DataModel.Accounts.AccountsModel
+import com.appp.ecovitae.DataModel.Accounts.MyAccount
+import com.appp.ecovitae.DataModel.Accounts.UploadClass
+import com.appp.ecovitae.DataModel.Company.CompanyModel
 import com.appp.ecovitae.MainActivity
 import com.appp.ecovitae.MapsActivity
 import com.appp.ecovitae.Profile
@@ -88,7 +92,8 @@ open class BaseActivity : Observer, NavigationView.OnNavigationItemSelectedListe
 
     private lateinit var auth: FirebaseAuth
     //info for the acc
-    var acc: MyAccount = MyAccount()
+    var acc: MyAccount =
+        MyAccount()
 
     //information of previous entersb
     var prefs: Prefs? = null

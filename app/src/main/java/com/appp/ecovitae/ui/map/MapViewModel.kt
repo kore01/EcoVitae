@@ -3,7 +3,7 @@ package com.appp.ecovitae.ui.map
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.appp.ecovitae.DataModel.PunktsModel
+import com.appp.ecovitae.DataModel.Punkts.PunktsModel
 import java.util.*
 
 class MapViewModel : ViewModel(), Observer {

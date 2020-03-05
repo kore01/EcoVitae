@@ -15,7 +15,7 @@ import android.util.Log
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import com.appp.ecovitae.Adapter.CustomAdapter
-import com.appp.ecovitae.DataModel.PunktsModel
+import com.appp.ecovitae.DataModel.Punkts.PunktsModel
 import com.appp.ecovitae.MainFiles.BaseActivity
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory

@@ -9,36 +9,44 @@ import android.view.Menu
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.appp.ecovitae.DataModel.*
+import com.appp.ecovitae.DataModel.Accounts.AccountsModel
+import com.appp.ecovitae.DataModel.Accounts.MyAccount
+import com.appp.ecovitae.DataModel.Company.CompanyModel
+import com.appp.ecovitae.DataModel.Levels.LevelsModel
+import com.appp.ecovitae.DataModel.NewsFeed.NewsFeedModel
+import com.appp.ecovitae.DataModel.Punkts.PunktsModel
+import com.appp.ecovitae.ui.map.MapViewModel
+import com.google.android.gms.location.*
+import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.zxing.integration.android.IntentIntegrator
-import com.google.zxing.integration.android.IntentResult
 import com.ramotion.circlemenu.CircleMenuView
 import java.util.*
 import kotlin.properties.Delegates
-
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.dial_throw_in.*
 
 class Main2Activity : AppCompatActivity(), Observer {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     var myDialog: Dialog? = null
+    private lateinit var mapViewModel: MapViewModel
+
 
     var observed = false
     var newsss: Int by Delegates.observable(0) { property, oldValue, newValue ->
@@ -76,6 +84,7 @@ class Main2Activity : AppCompatActivity(), Observer {
     var users = AccountsModel.getDataAccounts()!!
     var news = NewsFeedModel.getDataNewsfeed()!!
     var companies = CompanyModel.getDataCompany()!!
+
     var punkts = PunktsModel.getData()!!
     var levels = LevelsModel.getDataLevels()!!
     var menu: CircleMenuView? = null
@@ -158,9 +167,6 @@ class Main2Activity : AppCompatActivity(), Observer {
             }
 
 
-
-
-
         }
 
 
@@ -172,7 +178,7 @@ class Main2Activity : AppCompatActivity(), Observer {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send
+                R.id.nav_tools, R.id.nav_send, R.id.nav_tips, R.id.nav_shop, R.id.nav_bonus
             ), drawerLayout
         )
 
@@ -194,15 +200,88 @@ class Main2Activity : AppCompatActivity(), Observer {
 
         myDialog = Dialog(this)
         val ss = intent.getStringExtra("barcode")
-        if(ss!=null){Log.i("sss", ss)
-        openDialThrow(ss)
+        if (ss != null) {
+            Log.i("sss", ss)
+            openDialThrow(ss)
         }
 
     }
 
+    var tags = "111111"
 
-    fun openDialThrow(barc: String)
-    {
+
+    private fun checkifmatches(ch: String): Boolean {
+        var chsiz = ch.length - 1
+        for (i in 0..chsiz) {
+            if (ch[i] == '1' && tags[i] == '1') {
+                return true
+            }
+        }
+        return false
+    }
+
+    fun whatfor(str: String): String {
+        //what for are the bins?
+        if (str.length < 5) return "ERROR "
+        var ans = ""
+        if (str[0] == '1') {
+            if (ans.isNotEmpty()) ans += ", "
+            ans += "хартия"
+        }
+        if (str[1] == '1') {
+            if (ans.isNotEmpty()) ans += ", "
+            ans += "метал"
+        }
+        if (str[2] == '1') {
+            if (ans.isNotEmpty()) ans += ", "
+            ans += "пластмаса"
+        }
+        if (str[3] == '1') {
+            if (ans.isNotEmpty()) ans += ", "
+            ans += "стъкло"
+        }
+        ans = "Кош за " + ans
+        return ans
+    }
+
+    fun updatepunkts(mMap: GoogleMap) {
+        mMap.clear()
+        for (i in mapViewModel.punkts) {
+            if (!checkifmatches(i.whatfor!!)) continue
+            Log.i("HEREEE", i.lati + i.long)
+            val mest = LatLng(i.lati?.toDouble()!!, i.long?.toDouble()!!)
+            var name = whatfor(i.whatfor.toString())
+            if (i.color == "blue") {
+                mMap.addMarker(
+                    MarkerOptions().position(mest).title(name).snippet(i.desc)
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                )
+            }
+            if (i.color == "yellow") {
+                mMap.addMarker(
+                    MarkerOptions().position(mest).title(name).snippet(i.desc)
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
+                )
+            }
+            if (i.color == "green") {
+                mMap.addMarker(
+                    MarkerOptions().position(mest).title(name).snippet(i.desc)
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                )
+            }
+            if (i.color == "orange") {
+                mMap.addMarker(
+                    MarkerOptions().position(mest).title(name).snippet(i.desc)
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                )
+            }
+        }
+    }
+
+    lateinit var mMap: GoogleMap
+
+    lateinit var mFusedLocationClient: FusedLocationProviderClient
+    fun openDialThrow(barc: String) {
         myDialog!!.setContentView(R.layout.dial_throw_in)
 
         val txtclose: TextView = myDialog!!.findViewById(R.id.txtclose)
@@ -210,12 +289,50 @@ class Main2Activity : AppCompatActivity(), Observer {
         txtclose.setOnClickListener {
             myDialog!!.dismiss()
         }
+        mapViewModel =
+            ViewModelProviders.of(this).get(MapViewModel::class.java)
 
-        var btnthrow : Button = myDialog!!.findViewById(R.id.throwout)
+
+        var btnthrow: Button = myDialog!!.findViewById(R.id.throwout)
         btnthrow.setOnClickListener {
             throwin()
             myDialog!!.dismiss()
         }
+
+
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragment
+
+        mapFragment.getMapAsync(OnMapReadyCallback()
+        { mmMap ->
+            mMap = mmMap
+            //  if (checkPermissions()){
+            //  mMap = googleMap
+            updatepunkts(mMap)
+            mMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    this, R.raw.google_style
+                )
+            )
+
+            mMap.isMyLocationEnabled = true
+
+
+            mMap.moveCamera(CameraUpdateFactory.zoomTo(19f))
+
+            //                getLastLocation()
+            Log.i("select?", "select")
+            //              selectall()
+            //Log.i("select?", "select")}
+            //else
+            //{
+            //  PleaseStartGPS()
+            // requestPermissions()
+            //}
+            // var markerInfoWindowAdapter = InfoWindowAdapter(getApplicationContext());
+            //googleMap.setInfoWindowAdapter(markerInfoWindowAdapter);
+
+        })
 
 
         var givenstring = barc
@@ -232,6 +349,7 @@ class Main2Activity : AppCompatActivity(), Observer {
                     Log.i("here it issssss", name + "fdsafas" + "packaging: " + packaging)
                 }
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.i("fuck", "opaaaaaa")
                 //  Log.d(TAG, databaseError.getMessage()) //Don't ignore errors!
@@ -244,8 +362,12 @@ class Main2Activity : AppCompatActivity(), Observer {
         myDialog!!.show()
     }
 
-    fun throwin()
-    {
+
+
+
+
+
+    fun throwin() {
         acc.points = acc.points!! + 5
         acc.coins = acc.coins!! + 5
         updateacc()
@@ -422,7 +544,8 @@ class Main2Activity : AppCompatActivity(), Observer {
 
     }
 
-    var acc: MyAccount = MyAccount()
+    var acc: MyAccount =
+        MyAccount()
     fun signinacc(user: String) {
 
 

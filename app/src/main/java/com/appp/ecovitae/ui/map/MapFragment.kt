@@ -19,11 +19,10 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.appp.ecovitae.Adapter.CustomAdapter
 import com.appp.ecovitae.CheckBoxList
-import com.appp.ecovitae.DataModel.MyAccount
+import com.appp.ecovitae.DataModel.Accounts.MyAccount
 import com.appp.ecovitae.Main2Activity
 import com.appp.ecovitae.R
 import com.appp.ecovitae.R.*

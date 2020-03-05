@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.net.toUri
 import com.appp.ecovitae.CheckBoxList
-import com.appp.ecovitae.DataModel.NewsFeed
+import com.appp.ecovitae.DataModel.NewsFeed.NewsFeed
 import com.appp.ecovitae.GlideApp
 import com.appp.ecovitae.R
 import com.google.firebase.storage.FirebaseStorage

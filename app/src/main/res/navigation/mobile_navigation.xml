@@ -18,11 +18,6 @@
         tools:layout="@layout/fragment_map" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.appp.ecovitae.ui.newacc.NewaccFragment"
-        android:label="@string/menu_slideshow" />
-
-    <fragment
         android:id="@+id/nav_tools"
         android:name="com.appp.ecovitae.ui.profile.ProfileFragment"
         android:label="@string/menu_tools"
@@ -39,4 +34,23 @@
         android:name="com.appp.ecovitae.ui.send.SendFragment"
         android:label="@string/menu_send"
         tools:layout="@layout/fragment_send" />
+
+    <fragment
+        android:id="@+id/nav_tips"
+        android:name="com.appp.ecovitae.ui.send.TipsFragment"
+        android:label="@string/menu_tips"
+        tools:layout="@layout/fragment_tips" />
+
+    <fragment
+        android:id="@+id/nav_shop"
+        android:name="com.appp.ecovitae.ui.send.ShopFragment"
+        android:label="@string/menu_shop"
+        tools:layout="@layout/fragment_shop" />
+
+    <fragment
+        android:id="@+id/nav_bonus"
+        android:name="com.appp.ecovitae.ui.send.BonusFragment"
+        android:label="@string/menu_bonus"
+        tools:layout="@layout/fragment_bonus" />
+
 </navigation>

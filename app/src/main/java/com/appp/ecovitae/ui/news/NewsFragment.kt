@@ -12,10 +12,7 @@ import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.appp.ecovitae.Adapter.NewsFeedAdapter
-import com.appp.ecovitae.DataModel.NewsFeed
 import com.appp.ecovitae.GlideApp
 import com.appp.ecovitae.Main2Activity
 import com.appp.ecovitae.R
@@ -60,12 +57,12 @@ class NewsFragment : Fragment() {
             Log.i("main2news", (activity as Main2Activity).news.size.toString())
             adapter2 =
                 NewsFeedAdapter((activity as Main2Activity),
-                    (activity as Main2Activity).news as ArrayList<NewsFeed>
+                    (activity as Main2Activity).news
                 )
             //Log.i("modelarraylist", modelArrayList!!.size.toString() + "fdasfa")
-            newsView!!.adapter = adapter2
+            newsView.adapter = adapter2
         }
-        newsView!!.onItemClickListener =
+        newsView.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 // This is your listview's selected item
                 val item = parent.getItemAtPosition(position)
@@ -80,11 +77,11 @@ class NewsFragment : Fragment() {
             Log.i("main2news", (activity as Main2Activity).news.size.toString())
             adapter2 =
                 NewsFeedAdapter((activity as Main2Activity),
-                    (activity as Main2Activity).news as ArrayList<NewsFeed>
+                    (activity as Main2Activity).news
                 )
 
             Log.i("modelarraylist", adapter2!!.count.toString())
-            newsView!!.adapter = adapter2
+            newsView.adapter = adapter2
         }
     }
 }

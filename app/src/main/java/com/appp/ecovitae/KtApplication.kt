@@ -8,7 +8,7 @@ import com.google.firebase.database.FirebaseDatabase
 class KtApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
-        AndroidNetworking.initialize(applicationContext);
+        AndroidNetworking.initialize(applicationContext)
         if (!FirebaseApp.getApps(this).isEmpty()) {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true)
         }
