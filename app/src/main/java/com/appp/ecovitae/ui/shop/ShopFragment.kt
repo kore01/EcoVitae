@@ -1,14 +1,19 @@
 package com.appp.ecovitae.ui.send
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
+import android.widget.ListView
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.appp.ecovitae.Adapter.BonusAdapter
+import com.appp.ecovitae.DataModel.Bonus.Bonus
 import com.appp.ecovitae.DataModel.Shops.Shops
 import com.appp.ecovitae.GlideApp
 import com.appp.ecovitae.Main2Activity
@@ -28,6 +33,7 @@ class ShopFragment : Fragment(), OnMapReadyCallback {
     private lateinit var sendViewModel: ShopsViewModel
     lateinit var coordin: LatLng
     lateinit var shops: Shops
+    var bonusView: ListView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,6 +73,9 @@ class ShopFragment : Fragment(), OnMapReadyCallback {
         mapFragment?.getMapAsync(this)
 
 
+        bonusView = root.findViewById(R.id.bonus_list)
+
+
 
         return root
     }
@@ -80,9 +89,27 @@ class ShopFragment : Fragment(), OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 17F))
     }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.i("the hell", "bonus")
+        Log.i("Bonuses size", (activity as Main2Activity).bonuses.size.toString())
+        var adapter =
+            BonusAdapter((activity as Main2Activity),
+                (activity as Main2Activity).bonuses.filter{ bonus -> bonus.partnerid == shops.id  } as ArrayList<Bonus>)
 
 
+        //Log.i("modelarraylist", modelArrayList!!.size.toString() + "fdasfa")
+        bonusView!!.adapter = adapter
+
+        bonusView!!.onItemClickListener =
+            AdapterView.OnItemClickListener { parent, view, position, id ->
+                // This is your listview's selected item
+                // val item = parent.getItemAtPosition(position)
+                (activity as Main2Activity).bonusss=
+                    (activity as Main2Activity).bonuses[position].id.toString()
+            }
     }
+
 }

@@ -55,7 +55,7 @@
 
     <fragment
         android:id="@+id/nav_bonus"
-        android:name="com.appp.ecovitae.ui.send.OneBonusFragment"
+        android:name="com.appp.ecovitae.ui.send.BonusFragment"
         android:label="@string/menu_bonus"
         tools:layout="@layout/fragment_bonus" />
 
@@ -68,8 +68,8 @@
 
     <fragment
         android:id="@+id/nav_onebonus"
-        android:name="com.appp.ecovitae.ui.send.ShopFragment"
-        android:label="@string/menu_shop"
+        android:name="com.appp.ecovitae.ui.send.OneBonusFragment"
+        android:label="@string/menu_bonus"
         tools:layout="@layout/fragment_shop" />
 
 

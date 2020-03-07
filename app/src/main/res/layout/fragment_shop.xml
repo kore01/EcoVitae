@@ -78,8 +78,9 @@
                 android:textAppearance="@style/title" />
 
             <ListView
+                android:id="@+id/bonus_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="267dp" />
         </LinearLayout>
     </ScrollView>
 

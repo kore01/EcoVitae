@@ -9,6 +9,7 @@ class Bonus (snapshot: DataSnapshot) {
     var id: String? = ""
     var name: String? = ""
     var desc: String? = ""
+    var partnerid: String? = ""
 
 
     //coordinates of shop
@@ -16,6 +17,7 @@ class Bonus (snapshot: DataSnapshot) {
     var numbtak: String ?= ""
     var numbus: String ?= ""
     var partner: String ?= ""
+    var image: String ?= ""
 
 
     init
@@ -26,7 +28,8 @@ class Bonus (snapshot: DataSnapshot) {
             id = snapshot.key ?: ""
             desc = data["desc"] as String
             name = data["name"] as String
-
+            partnerid = data ["partnerid"] as String
+            image = data["image"] as String
             price = data["price"] as String
             numbtak = data["numbtak"] as String
             numbus = data["numbus"] as String
