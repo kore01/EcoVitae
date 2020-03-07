@@ -35,10 +35,10 @@ class HomeFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         newsView = root.findViewById(R.id.newsfeed)
 
-        lfrom = root.findViewById<Button>(R.id.lvfrom)
+        lfrom = root.findViewById(R.id.lvfrom)
         pointstonext = root.findViewById(R.id.nextlevel)
-        lto = root.findViewById<Button>(R.id.lvto)
-        slide = root.findViewById<ProgressBar>(R.id.progress)
+        lto = root.findViewById(R.id.lvto)
+        slide = root.findViewById(R.id.progress)
         homeViewModel.text.observe(this, Observer {
             Log.i("fdas", "fdasfdasfdshgdf")
         })
@@ -68,23 +68,12 @@ class HomeFragment : Fragment() {
 
             }
 
-
-        // WORKING CODE!
-        /*      val storage = FirebaseStorage.getInstance()
-      // Create a reference to a file from a Google Cloud Storage URI
-              val gsReference = storage.getReferenceFromUrl("gs://ecovitae-4010a.appspot.com/Screenshot (29).png")
-              GlideApp.with(context!!)
-                  .load(gsReference)
-                  .into(imageView)
-      */
         return root
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        //super.onActivityResult(requestCode, resultCode, data)
 
-        Log.i("on activity result", "result")
         var result: IntentResult? =
             IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
 

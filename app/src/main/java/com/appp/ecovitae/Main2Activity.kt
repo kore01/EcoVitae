@@ -20,10 +20,13 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.appp.ecovitae.DataModel.Accounts.AccountsModel
 import com.appp.ecovitae.DataModel.Accounts.MyAccount
+import com.appp.ecovitae.DataModel.Bonus.Bonus
+import com.appp.ecovitae.DataModel.Bonus.BonusModel
 import com.appp.ecovitae.DataModel.Company.CompanyModel
 import com.appp.ecovitae.DataModel.Levels.LevelsModel
 import com.appp.ecovitae.DataModel.NewsFeed.NewsFeedModel
 import com.appp.ecovitae.DataModel.Punkts.PunktsModel
+import com.appp.ecovitae.DataModel.Shops.ShopsModel
 import com.appp.ecovitae.ui.map.MapViewModel
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
@@ -56,6 +59,23 @@ class Main2Activity : AppCompatActivity(), Observer {
         Log.i("newsss", newsss.toString())
     }
 
+
+    var shopsss: String by Delegates.observable(" ") { property, oldValue, newValue ->
+        observed = true
+        val navController = findNavController(R.id.nav_host_fragment)
+        Log.i("shopsss", shopsss.toString())
+        navController.navigate(R.id.nav_shop)
+
+    }
+
+    var bonusss: String by Delegates.observable(" ") { property, oldValue, newValue ->
+        observed = true
+        val navController = findNavController(R.id.nav_host_fragment)
+        Log.i("bonusss", bonusss.toString())
+        navController.navigate(R.id.nav_bonus)
+
+    }
+
     var logout: Int by Delegates.observable(0) { property, oldValue, newValue ->
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -81,9 +101,39 @@ class Main2Activity : AppCompatActivity(), Observer {
         }
     }
 
+    var updated: Int by Delegates.observable(0) { property, oldValue, newValue ->
+
+        val navController = findNavController(R.id.nav_host_fragment)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        menu = findViewById(R.id.circle_menu)
+
+        if (FirebaseAuth.getInstance().currentUser != null) {
+
+            navView.menu.findItem(R.id.nav_slideshow).isVisible = false
+            navView.menu.findItem(R.id.nav_tools).isVisible = true
+            //navController.navigate(R.id.nav_home)
+            navController.navigate(navController.currentDestination!!.id)
+            navView.visibility = View.VISIBLE
+            toolbar.visibility = View.VISIBLE
+            menu!!.visibility = View.VISIBLE
+        } else {
+            Log.i("Here", "Hfmdka")
+            navController.navigate(R.id.nav_slideshow)
+            //navView.menu.findItem(R.id.nav_tools).isVisible = false
+            //navView.menu.findItem(R.id.nav_slideshow).isVisible = true
+            toolbar.visibility = View.GONE
+            navView.visibility = View.GONE
+            menu!!.visibility = View.GONE
+        }
+    }
+
     var users = AccountsModel.getDataAccounts()!!
     var news = NewsFeedModel.getDataNewsfeed()!!
     var companies = CompanyModel.getDataCompany()!!
+    var shops = ShopsModel.getData()!!
+    var bonuses = BonusModel.getDataBonus()!!
+    //var
 
     var punkts = PunktsModel.getData()!!
     var levels = LevelsModel.getDataLevels()!!
@@ -110,6 +160,10 @@ class Main2Activity : AppCompatActivity(), Observer {
         NewsFeedModel.addObserver(this)
         LevelsModel
         LevelsModel.addObserver(this)
+        ShopsModel
+        ShopsModel.addObserver(this)
+        BonusModel
+        BonusModel.addObserver(this)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -178,7 +232,7 @@ class Main2Activity : AppCompatActivity(), Observer {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_send, R.id.nav_tips, R.id.nav_shop, R.id.nav_bonus
+                R.id.nav_tools, R.id.nav_send, R.id.nav_tips, R.id.nav_shops, R.id.nav_bonus, R.id.nav_slideshow, R.id.nav_shop
             ), drawerLayout
         )
 
@@ -376,25 +430,25 @@ class Main2Activity : AppCompatActivity(), Observer {
     override fun onStart() {
         super.onStart()
         Log.i("on start", "starttt")
-        logout++
+        updated++
     }
 
     override fun onRestart() {
         super.onRestart()
         Log.i("on restart", "REstarttt")
-        logout++
+        updated++
     }
 
     override fun onStop() {
         super.onStop()
         Log.i("on stop", "stoppp")
-        logout++
+        updated++
     }
 
     override fun onDestroy() {
         super.onDestroy()
         Log.i("on destroy", "destroyy")
-        logout++
+        updated++
     }
 
     override fun onPause() {
@@ -501,7 +555,7 @@ class Main2Activity : AppCompatActivity(), Observer {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main2, menu)
+        //menuInflater.inflate(R.menu.main2, menu)
         return true
     }
 
@@ -517,7 +571,8 @@ class Main2Activity : AppCompatActivity(), Observer {
         punkts = PunktsModel.getData()!!
         news = NewsFeedModel.getDataNewsfeed()!!
         levels = LevelsModel.getDataLevels()!!
-
+        shops = ShopsModel.getData()!!
+        bonuses=BonusModel.getDataBonus()!!
 
         Log.i("users", users.size.toString())
 
@@ -538,7 +593,7 @@ class Main2Activity : AppCompatActivity(), Observer {
         }
 
         if (br == 0) {
-            logout++
+            updated++
             br++
         }
 
@@ -591,7 +646,7 @@ class Main2Activity : AppCompatActivity(), Observer {
                     Log.i("what level", acc.level.toString())
                     Log.i("email?", acc.email)
 
-                    logout++
+                    updated++
                     //Log.d(TAG, username)
                 }
             }

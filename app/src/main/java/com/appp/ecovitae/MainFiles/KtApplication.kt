@@ -1,4 +1,4 @@
-package com.appp.ecovitae
+package com.appp.ecovitae.MainFiles
 
 import androidx.multidex.MultiDexApplication
 import com.androidnetworking.AndroidNetworking

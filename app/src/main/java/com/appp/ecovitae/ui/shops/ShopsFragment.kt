@@ -7,19 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ListView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.appp.ecovitae.Adapter.BonusAdapter
 import com.appp.ecovitae.Adapter.ShopsAdapter
 import com.appp.ecovitae.Main2Activity
 import com.appp.ecovitae.R
 
-class BonusFragment : Fragment() {
+class ShopsFragment : Fragment() {
 
     private lateinit var sendViewModel: ShopsViewModel
-    var bonusView: ListView? = null
+
+    private var adapter: ShopsAdapter? = null
+    var shopsView: ListView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,24 +27,20 @@ class BonusFragment : Fragment() {
     ): View? {
         sendViewModel =
             ViewModelProviders.of(this).get(ShopsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_bonus, container, false)
-        bonusView = root.findViewById(R.id.bonus_list)
+        val root = inflater.inflate(R.layout.fragment_shops, container, false)
+        shopsView = root.findViewById(R.id.shops_list)
 
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Log.i("Bonuses size",(activity as Main2Activity).bonuses.size.toString())
-        var adapter =
-            BonusAdapter((activity as Main2Activity), (activity as Main2Activity).bonuses)
-
-
+        adapter =
+            ShopsAdapter((activity as Main2Activity), (activity as Main2Activity).shops)
         //Log.i("modelarraylist", modelArrayList!!.size.toString() + "fdasfa")
-        bonusView!!.adapter = adapter
+        shopsView!!.adapter = adapter
 
-        bonusView!!.onItemClickListener =
+        shopsView!!.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 // This is your listview's selected item
                 // val item = parent.getItemAtPosition(position)

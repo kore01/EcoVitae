@@ -10,9 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.appp.ecovitae.R
 
-class ShopFragment : Fragment() {
+class OneBonusFragment : Fragment() {
 
-    private lateinit var sendViewModel: ShopViewModel
+    private lateinit var sendViewModel: ShopsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,12 +20,9 @@ class ShopFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         sendViewModel =
-            ViewModelProviders.of(this).get(ShopViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_shop, container, false)
-        val textView: TextView = root.findViewById(R.id.text_send)
-        sendViewModel.text.observe(this, Observer {
-            textView.text = it
-        })
+            ViewModelProviders.of(this).get(ShopsViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_bonus, container, false)
+
         return root
     }
 }

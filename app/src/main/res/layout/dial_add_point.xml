@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350dp"
+    android:layout_width="300dp"
     android:layout_height="475dp"
     android:layout_gravity="center"
-    android:background="@drawable/border"
+    android:background="#BED3F1F5"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -15,6 +15,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginBottom="20dp"
         android:layout_weight="1"
+        android:background="#00FFFFFF"
         android:gravity="top"
         android:orientation="horizontal">
 
@@ -24,7 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Добави кошче на своята локация" />
+            android:text="Добавете кошче на локацията си"
+            android:textAppearance="@style/title" />
 
         <TextView
             android:id="@+id/txtclose"
@@ -36,6 +38,16 @@
             android:text="X" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_weight="1"
+        android:text="Подробности за местоположението*"
+        android:textAppearance="@style/biggreen" />
+
     <EditText
         android:id="@+id/desc"
         android:layout_width="match_parent"
@@ -44,14 +56,26 @@
         android:layout_marginRight="15dp"
         android:layout_weight="1"
         android:ems="10"
-        android:hint="Description"
+        android:hint="Описание"
         android:inputType="textEmailAddress"
         android:textAllCaps="false"
         android:textStyle="italic" />
 
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_weight="1"
+        android:text="Вид отпадъци*"
+        android:textAppearance="@style/biggreen" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -65,13 +89,15 @@
                 android:id="@+id/cB1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Хартия" />
+                android:text="Хартия"
+                android:textAppearance="@style/biggreen" />
 
             <CheckBox
                 android:id="@+id/cB2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Метал" />
+                android:text="Метал"
+                android:textAppearance="@style/biggreen" />
         </LinearLayout>
 
         <LinearLayout
@@ -84,15 +110,27 @@
                 android:id="@+id/cB4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Стъкло" />
+                android:text="Стъкло"
+                android:textAppearance="@style/biggreen" />
 
             <CheckBox
                 android:id="@+id/cB3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Пластмаса" />
+                android:text="Пластмаса"
+                android:textAppearance="@style/biggreen" />
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_weight="1"
+        android:text="Цвят на контейнера*"
+        android:textAppearance="@style/biggreen" />
 
     <RadioGroup
         android:id="@+id/rb"
@@ -104,32 +142,42 @@
             android:id="@+id/radioButton2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="син" />
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="син"
+            android:textAppearance="@style/biggreen" />
 
         <RadioButton
             android:id="@+id/radioButton3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="зелен" />
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="зелен"
+            android:textAppearance="@style/biggreen" />
 
         <RadioButton
             android:id="@+id/radioButton4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="жълт" />
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="жълт"
+            android:textAppearance="@style/biggreen" />
 
     </RadioGroup>
 
     <Button
         android:id="@+id/btn_add"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/et_password"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:background="@color/colorPrimary"
-        android:text="@string/create_act"
+        android:background="#A600BCD4"
+        android:foregroundGravity="center|center_horizontal"
+        android:gravity="center|center_horizontal"
+        android:text="Добавете"
         android:textColor="@color/white" />
 
 </LinearLayout>

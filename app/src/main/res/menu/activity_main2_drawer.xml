@@ -42,7 +42,7 @@
     <item android:title="Бонуси и партньори">
         <menu>
             <item
-                android:id="@+id/nav_shop"
+                android:id="@+id/nav_shops"
                 android:icon="@drawable/ic_menu_shop"
                 android:title="@string/menu_shop" />
             <item

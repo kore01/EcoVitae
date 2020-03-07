@@ -153,6 +153,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun Add_Point() {
         myDialog!!.setContentView(R.layout.dial_add_point)
+        myDialog!!.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent);
 
         val txtclose: TextView = myDialog!!.findViewById(R.id.txtclose)
         txtclose.text = "X"
