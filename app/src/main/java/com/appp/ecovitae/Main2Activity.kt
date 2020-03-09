@@ -232,7 +232,7 @@ class Main2Activity : AppCompatActivity(), Observer {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_send, R.id.nav_tips, R.id.nav_shops, R.id.nav_bonus, R.id.nav_slideshow, R.id.nav_shop, R.id.nav_onebonus
+                R.id.nav_tools, R.id.nav_send, R.id.nav_tips, R.id.nav_shops, R.id.nav_bonus, R.id.nav_slideshow, R.id.nav_shop, R.id.nav_onebonus, R.id.nav_news
             ), drawerLayout
         )
 

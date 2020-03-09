@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
-    android:layout_height="475dp"
+    android:layout_height="575dp"
     android:layout_gravity="center"
     android:background="#BED3F1F5"
     android:orientation="vertical"
@@ -166,6 +166,113 @@
             android:textAppearance="@style/biggreen" />
 
     </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_weight="1"
+        android:text="Ден за събиране*"
+        android:textAppearance="@style/biggreen" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/pon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Понеделник"
+                android:textAppearance="@style/biggreen" />
+
+            <CheckBox
+                android:id="@+id/vt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Вторник"
+                android:textAppearance="@style/biggreen" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/PT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Петък"
+                android:textAppearance="@style/biggreen" />
+
+            <CheckBox
+                android:id="@+id/SB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Събота"
+                android:textAppearance="@style/biggreen" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/sr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Сряда"
+                android:textAppearance="@style/biggreen" />
+
+            <CheckBox
+                android:id="@+id/cht"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Четвъртък"
+                android:textAppearance="@style/biggreen" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/ND"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Неделя"
+                android:textAppearance="@style/biggreen" />
+        </LinearLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_add"

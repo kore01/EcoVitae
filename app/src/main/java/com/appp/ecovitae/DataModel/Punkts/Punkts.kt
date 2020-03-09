@@ -13,6 +13,7 @@ class Punkts (snapshot: DataSnapshot)
     var color: String? = ""
     var whatfor: String? = ""
     var comp: String ?= ""
+    var days: String ?= ""
 
     init
     {
@@ -26,6 +27,7 @@ class Punkts (snapshot: DataSnapshot)
             color = data["color"] as String
             whatfor = data["WhatFor"] as String
             comp = data["company"] as String
+            days = data["days"] as String
 
             Log.i("infoPunkt", id+" "+desc+" "+long+" "+lati+" "+color)
         } catch (e: Exception)

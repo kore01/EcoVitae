@@ -21,8 +21,10 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.appp.ecovitae.Adapter.CustomAdapter
+import com.appp.ecovitae.Adapter.InfoWindowAdapter
 import com.appp.ecovitae.CheckBoxList
 import com.appp.ecovitae.DataModel.Accounts.MyAccount
+import com.appp.ecovitae.DataModel.InfoWindowData
 import com.appp.ecovitae.Main2Activity
 import com.appp.ecovitae.R
 import com.appp.ecovitae.R.*
@@ -173,6 +175,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
         myDialog!!.show()
     }
+
     var firebaseData = FirebaseDatabase.getInstance().reference
 
     private fun check_all_is_filled(): Boolean {
@@ -212,15 +215,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         var color = ""
 
-        Log.i("fdasfda", checked.toString() + "gyhjkojhgvh")
-        Log.i("fdasfda", rb1.id.toString() + "gyhjkojhgvh")
-        Log.i("fdasfda", rb2.id.toString() + "gyhjkojhgvh")
-        Log.i("fdasfda", rb3.id.toString() + "gyhjkojhgvh")
-
-        if (checked == rb1.id) {
-            color = "blue"
-        }
-
         if (checked == rb1.id) {
             color = "blue"
         }
@@ -241,6 +235,30 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         if (myloc == null) return false
 
 
+        val pon: CheckBox = myDialog!!.findViewById(R.id.pon)
+        val vt: CheckBox = myDialog!!.findViewById(R.id.vt)
+        val sr: CheckBox = myDialog!!.findViewById(R.id.sr)
+        val cht: CheckBox = myDialog!!.findViewById(R.id.cht)
+        val pet: CheckBox = myDialog!!.findViewById(R.id.PT)
+        val sb: CheckBox = myDialog!!.findViewById(R.id.SB)
+        val ned: CheckBox = myDialog!!.findViewById(R.id.ND)
+
+        var days = ""
+        Log.i("thfnas", cb1.isChecked.toString())
+        if (pon.isChecked) days += "понеделник, "
+        if (vt.isChecked) days += "вторник, "
+        if (sr.isChecked) days += "сряда, "
+        if (cht.isChecked) days += "четвъртък, "
+        if (pet.isChecked) days += "петък, "
+        if (sb.isChecked) days += "събота, "
+        if (ned.isChecked) days += "неделя, "
+
+        if (days.equals(""))
+            return false
+
+        days=days.dropLast(2)
+
+
         val key = firebaseData.child("Punkts").push().key
         firebaseData.child("Punkts").child(key!!).child("WhatFor").setValue(whatfor)
         firebaseData.child("Punkts").child(key).child("desc").setValue(desc.text.toString())
@@ -249,20 +267,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         firebaseData.child("Punkts").child(key).child("latitude")
             .setValue(myloc!!.latitude.toString())
         firebaseData.child("Punkts").child(key).child("color").setValue(color)
+        firebaseData.child("Punkts").child(key).child("company").setValue(myacc!!.comp)
+        firebaseData.child("Punkts").child(key).child("days").setValue(days)
+
         updatepunkts()
         //if(myDialog)
         return true
 
     }
-
-
-    /* val key = firebaseData.child("Punkts").push().key
-     firebaseData.child("Punkts").child(key!!).child("WhatFor").setValue("00000")
-     firebaseData.child("Punkts").child(key!!).child("desc").setValue("00000")
-     firebaseData.child("Punkts").child(key!!).child("longitude").setValue("00000")
-     firebaseData.child("Punkts").child(key!!).child("latitude").setValue("00000")
-     firebaseData.child("Punkts").child(key!!).child("color").setValue("0e0000")
-*/
 
     private fun getModel(isSelect: Boolean): ArrayList<CheckBoxList> {
         val list = ArrayList<CheckBoxList>()
@@ -275,7 +287,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
         return list
     }
-
 
     private fun filterr() {
 
@@ -334,30 +345,46 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             Log.i("HEREEE", i.lati + i.long)
             val mest = LatLng(i.lati?.toDouble()!!, i.long?.toDouble()!!)
             var name = whatfor(i.whatfor.toString())
+
+            val markerOptions = MarkerOptions()
+            markerOptions.position(mest)
+                .title("Location Details")
+                .snippet("I am custom Location Marker.")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+
+            val info = InfoWindowData(
+                name, i.desc!!,
+                i.comp!!,
+                i.days!!
+            )
+
+
             if (i.color == "blue") {
-                mMap.addMarker(
-                    MarkerOptions().position(mest).title(name).snippet(i.desc)
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                )
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
             }
             if (i.color == "yellow") {
-                mMap.addMarker(
-                    MarkerOptions().position(mest).title(name).snippet(i.desc)
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
-                )
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
             }
             if (i.color == "green") {
-                mMap.addMarker(
-                    MarkerOptions().position(mest).title(name).snippet(i.desc)
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-                )
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
             }
             if (i.color == "orange") {
-                mMap.addMarker(
-                    MarkerOptions().position(mest).title(name).snippet(i.desc)
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                )
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
             }
+
+            if (i.color == "purple") {
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+            }
+
+
+            val customInfoWindow = InfoWindowAdapter(context!!)
+
+            mMap!!.setInfoWindowAdapter(customInfoWindow)
+
+            val marker = mMap!!.addMarker(markerOptions)
+            marker.tag = info
+            marker.showInfoWindow()
+
         }
     }
 
@@ -399,23 +426,22 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
 
 
-        if (checkPermissions()){
-        mMap = googleMap
-        updatepunkts()
-        mMap.setMapStyle(
-            MapStyleOptions.loadRawResourceStyle(
-                context!!, raw.google_style
+        if (checkPermissions()) {
+            mMap = googleMap
+            updatepunkts()
+            mMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    context!!, raw.google_style
+                )
             )
-        )
 
-        mMap.isMyLocationEnabled = true
+            mMap.isMyLocationEnabled = true
 
-        getLastLocation()
-        Log.i("select?", "select")
-        selectall()
-        Log.i("select?", "select")}
-        else
-        {
+            getLastLocation()
+            Log.i("select?", "select")
+            selectall()
+            Log.i("select?", "select")
+        } else {
             PleaseStartGPS()
             requestPermissions()
         }
