@@ -3,12 +3,15 @@ package com.appp.ecovitae
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -46,6 +49,7 @@ import kotlin.properties.Delegates
 
 class Main2Activity : AppCompatActivity(), Observer {
 
+    private var lastLocation: Location? = null
     private lateinit var appBarConfiguration: AppBarConfiguration
     var myDialog: Dialog? = null
     private lateinit var mapViewModel: MapViewModel
@@ -231,8 +235,18 @@ class Main2Activity : AppCompatActivity(), Observer {
         Log.i("should be here", "fdaksva")
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_send, R.id.nav_tips, R.id.nav_shops, R.id.nav_bonus, R.id.nav_slideshow, R.id.nav_shop, R.id.nav_onebonus, R.id.nav_news
+                R.id.nav_home,
+                R.id.nav_gallery,
+                R.id.nav_slideshow,
+                R.id.nav_tools,
+                R.id.nav_send,
+                R.id.nav_tips,
+                R.id.nav_shops,
+                R.id.nav_bonus,
+                R.id.nav_slideshow,
+                R.id.nav_shop,
+                R.id.nav_onebonus,
+                R.id.nav_news
             ), drawerLayout
         )
 
@@ -333,9 +347,13 @@ class Main2Activity : AppCompatActivity(), Observer {
     }
 
     lateinit var mMap: GoogleMap
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
     fun openDialThrow(barc: String) {
+
+        signinacc(FirebaseAuth.getInstance().currentUser?.email.toString())
+
         myDialog!!.setContentView(R.layout.dial_throw_in)
 
         val txtclose: TextView = myDialog!!.findViewById(R.id.txtclose)
@@ -349,8 +367,16 @@ class Main2Activity : AppCompatActivity(), Observer {
 
         var btnthrow: Button = myDialog!!.findViewById(R.id.throwout)
         btnthrow.setOnClickListener {
-            throwin()
-            myDialog!!.dismiss()
+            var res = throwin()
+            if (res == true) {
+                myDialog!!.dismiss()
+
+                Log.i("yeap", "it worked")
+
+            } else {
+                Log.i("too far", "opa")
+
+            }
         }
 
 
@@ -370,22 +396,19 @@ class Main2Activity : AppCompatActivity(), Observer {
             )
 
             mMap.isMyLocationEnabled = true
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+            fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
+                // Got last known location. In some rare situations this can be null.
+                // 3
 
+                Log.i("location", location.longitude.toString())
+                if (location != null) {
+                    lastLocation = location
+                    val currentLatLng = LatLng(location.latitude, location.longitude)
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18f))
+                }
 
-            mMap.moveCamera(CameraUpdateFactory.zoomTo(19f))
-
-            //                getLastLocation()
-            Log.i("select?", "select")
-            //              selectall()
-            //Log.i("select?", "select")}
-            //else
-            //{
-            //  PleaseStartGPS()
-            // requestPermissions()
-            //}
-            // var markerInfoWindowAdapter = InfoWindowAdapter(getApplicationContext());
-            //googleMap.setInfoWindowAdapter(markerInfoWindowAdapter);
-
+            }
         })
 
 
@@ -417,15 +440,38 @@ class Main2Activity : AppCompatActivity(), Observer {
     }
 
 
+    fun throwin(): Boolean {
+        updated++
+
+        for (i in mapViewModel.punkts) {
+            if (!checkifmatches(i.whatfor!!)) continue
+            val mest = LatLng(i.lati?.toDouble()!!, i.long?.toDouble()!!)
 
 
+            var loc1 = Location(LocationManager.GPS_PROVIDER)
+            var loc2 = Location(LocationManager.GPS_PROVIDER)
 
 
-    fun throwin() {
-        acc.points = acc.points!! + 5
-        acc.coins = acc.coins!! + 5
-        updateacc()
+            loc1.setLatitude(mest.latitude);
+            loc1.setLongitude(mest.longitude);
+
+            loc2.setLatitude(lastLocation!!.latitude)
+            loc2.setLongitude(lastLocation!!.longitude)
+
+
+            var dist = loc1.distanceTo(loc2)
+
+            Log.i("distance: ", dist.toString())
+            if (dist > 7) continue
+
+            acc.points = acc.points!! + 5
+            acc.coins = acc.coins!! + 5
+            updateacc()
+            return true
+        }
+        return false
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -509,6 +555,7 @@ class Main2Activity : AppCompatActivity(), Observer {
                     Log.i("here it issssss", name + "fdsafas")
                     acc.points = acc.points!! + 5
                     acc.coins = acc.coins!! + 5
+                    acc.bin = acc.bin!! + 1
                     updateacc()
 
 
@@ -525,6 +572,8 @@ class Main2Activity : AppCompatActivity(), Observer {
     }
 
     private fun updateacc() {
+
+
         var firebaseData = FirebaseDatabase.getInstance().reference
         firebaseData.child("Users").child(acc.id.toString()).child("coins")
             .setValue(acc.coins.toString())
@@ -572,7 +621,7 @@ class Main2Activity : AppCompatActivity(), Observer {
         news = NewsFeedModel.getDataNewsfeed()!!
         levels = LevelsModel.getDataLevels()!!
         shops = ShopsModel.getData()!!
-        bonuses=BonusModel.getDataBonus()!!
+        bonuses = BonusModel.getDataBonus()!!
 
         Log.i("users", users.size.toString())
 
@@ -601,6 +650,7 @@ class Main2Activity : AppCompatActivity(), Observer {
 
     var acc: MyAccount =
         MyAccount()
+
     fun signinacc(user: String) {
 
 
@@ -623,13 +673,12 @@ class Main2Activity : AppCompatActivity(), Observer {
                 for (ds in dataSnapshot.children) {
                     Log.i("dssss", ds.key.toString())
                     //Log.i("value", ds.value as String)
-                    val packaging = ds.child("packaging").getValue(String::class.java)
                     acc.email = ds.child("email").getValue(String::class.java)
                     acc.id = ds.key
                     acc.coins = ds.child("coins").getValue(String::class.java)?.toInt()
                     acc.points = ds.child("points").getValue(String::class.java)?.toInt()
                     acc.bin = ds.child("bin").getValue(String::class.java)?.toInt()
-                    acc.rate = ds.child("rating").getValue(String::class.java)?.toInt()
+                    acc.rate = ds.child("rating").getValue(String::class.java)!!.toInt()
                     var num = ds.child("company").getValue(String::class.java)
                     Log.i("companiiiies", num.toString())
                     var str: String = ""
@@ -647,13 +696,12 @@ class Main2Activity : AppCompatActivity(), Observer {
                     Log.i("email?", acc.email)
 
                     updated++
-                    //Log.d(TAG, username)
+
                 }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Log.i("fuck", "opaaaaaa")
-                //  Log.d(TAG, databaseError.getMessage()) //Don't ignore errors!
+
             }
         }
         ordersRef.addListenerForSingleValueEvent(valueEventListener)

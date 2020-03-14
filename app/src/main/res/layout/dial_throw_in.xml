@@ -22,7 +22,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.7"
+            android:layout_weight="1.5"
             android:orientation="horizontal">
 
             <TextView
@@ -31,18 +31,18 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Изхвърлете в някой от тези кошове:"
+                android:text="Изхвърлете в един от тези кошове:"
                 android:textAppearance="@style/title" />
 
             <TextView
                 android:id="@+id/txtclose"
                 android:layout_width="26dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="end"
+                android:layout_gravity="center|end"
                 android:layout_margin="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:gravity="center|top"
+                android:gravity="center|center_horizontal|top|center_vertical"
                 android:text="X"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
         </LinearLayout>
@@ -53,16 +53,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
-            />
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/throwout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="5dp"
-            android:layout_weight="1.95"
+            android:layout_weight="1.5"
             android:background="#00BCD4"
             android:foregroundGravity="bottom"
             android:text="Изхвърли"
