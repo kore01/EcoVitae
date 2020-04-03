@@ -685,7 +685,7 @@ class Main2Activity : AppCompatActivity(), Observer {
                     if (num == "") {
                         Log.i("hhhhhh", "tttttt")
                         str = ""
-                    } else str = companies[num!!.toInt() - 1].name + " "
+                    } //else str = companies[num!!.toInt() - 1].name + " "
                     //Log.i("companiiiis", i.comp)
 
                     acc.comp = str
