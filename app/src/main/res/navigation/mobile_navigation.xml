@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.appp.ecovitae.ui.map.InfoFragment"
+        android:name="com.appp.ecovitae.ui.map.MapFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_map" />
 
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/nav_info"
-        android:name="com.appp.ecovitae.ui.map.InfoFragment"
+        android:name="com.appp.ecovitae.ui.info.InfoFragment"
         android:label="@string/menu_info"
         tools:layout="@layout/fragment_info" />
 
@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/nav_tips"
-        android:name="com.appp.ecovitae.ui.send.TipsFragment"
+        android:name="com.appp.ecovitae.ui.tips.TipsFragment"
         android:label="@string/menu_tips"
         tools:layout="@layout/fragment_tips" />
 

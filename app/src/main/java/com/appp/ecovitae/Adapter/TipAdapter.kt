@@ -1,22 +1,25 @@
- package com.appp.ecovitae.Adapter
+package com.appp.ecovitae.Adapter
 
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.BaseAdapter
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.net.toUri
 import com.appp.ecovitae.CheckBoxList
 import com.appp.ecovitae.DataModel.Bonus.Bonus
+import com.appp.ecovitae.DataModel.Tips.Tip
 import com.appp.ecovitae.GlideApp
 import com.appp.ecovitae.R
 import com.google.firebase.storage.FirebaseStorage
 
-class BonusAdapter(private val context: Context, modelArrayList: ArrayList<Bonus>) :
+class TipAdapter(private val context: Context, modelArrayList: ArrayList<Tip>) :
     BaseAdapter() {
 
-    private var modelArrayList: ArrayList<Bonus>
+    private var modelArrayList: ArrayList<Tip>
 
     init {
         this.modelArrayList = modelArrayList
@@ -53,43 +56,23 @@ class BonusAdapter(private val context: Context, modelArrayList: ArrayList<Bonus
             holder = ViewHolder()
             val inflater =
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convertView = inflater.inflate(R.layout.bonus_item, null, true)
-
-
+            convertView = inflater.inflate(R.layout.tip_item, null, true)
 
             //holder.shop = convertView!!.findViewById(R.id.shop) as TextView
-            holder.title = convertView.findViewById(R.id.title) as TextView
             holder.text = convertView.findViewById(R.id.text) as TextView
-            holder.image = convertView.findViewById(R.id.image) as ImageView
-            holder.cena = convertView.findViewById(R.id.cena) as TextView
-
             convertView.tag = holder
         } else {
             // the getTag returns the viewHolder object set as a tag to the view
             holder = convertView.tag as ViewHolder
         }
-        val storage = FirebaseStorage.getInstance()
-// Create a reference to a file from a Google Cloud Storage URI
 
-
-         val gsReference =
-            storage.getReferenceFromUrl(modelArrayList[position].image!!.toUri().toString())
-        GlideApp.with(context)
-            .load(gsReference)
-            .into(holder.image!!)
-
-        holder.title!!.text = modelArrayList[position].name
-        holder.text!!.text = modelArrayList[position].desc!!.take(80)
-        holder.cena!!.text = "Цена: " + modelArrayList[position].price!!.take(80)
-
+        holder.text!!.text = modelArrayList[position].desc
 
         return convertView!!
     }
 
     private inner class ViewHolder {
 
-        var cena: TextView? = null
-        var image: ImageView? = null
         var title: TextView? = null
         var text: TextView? = null
     }

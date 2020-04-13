@@ -28,6 +28,7 @@ import com.appp.ecovitae.DataModel.InfoWindowData
 import com.appp.ecovitae.Main2Activity
 import com.appp.ecovitae.R
 import com.appp.ecovitae.R.*
+import com.appp.ecovitae.ui.info.InfoViewModel
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -52,6 +53,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private var customAdapter: CustomAdapter? = null
     private val trashlist = arrayOf("Хартия", "Метал", "Пластмаса", "Стъкло")
     private var myacc: MyAccount? = null
+    private var add: ImageButton? = null
 
 
     override fun onCreateView(
@@ -64,7 +66,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val root = inflater.inflate(layout.fragment_map, container, false)
         var upd: Button = root.findViewById(R.id.update)
         var sel: Button = root.findViewById(R.id.select)
-        var add: ImageButton = root.findViewById(R.id.add)
+        add = root.findViewById(R.id.add)
         var desel: Button = root.findViewById(R.id.deselect)
         var filtbtn: ImageButton = root.findViewById(R.id.filter)
         var men: LinearLayout = root.findViewById(R.id.ll)
@@ -85,11 +87,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         //
         myacc = (activity as Main2Activity).acc
         Log.i("account", myacc!!.comp.toString() + "fdaskfjc")
+        Log.i("account", myacc!!.email.toString() + "fdaskfjc")
 
 
         if (myacc!!.comp.toString() == "") {
-            add.visibility = View.GONE
+            add!!.visibility = View.GONE
             filtbtn.visibility = View.VISIBLE
+        }
+        else
+        {
+            add!!.visibility = View.VISIBLE
+
+
         }
 
         upd.setOnClickListener {
@@ -97,9 +106,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             val animation = AnimationUtils.loadAnimation(context!!, R.anim.fade_out)
             men.startAnimation(animation)
             men.visibility = View.GONE
-            add.visibility = View.VISIBLE
+            add!!.visibility = View.VISIBLE
             if (myacc!!.comp.toString() == "") {
-                add.visibility = View.GONE
+                add!!.visibility = View.GONE
             }
             filterr()
         }
@@ -108,9 +117,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             val animation = AnimationUtils.loadAnimation(context!!, R.anim.fade_out)
             men.startAnimation(animation)
             men.visibility = View.GONE
-            add.visibility = View.VISIBLE
+            add!!.visibility = View.VISIBLE
             if (myacc!!.comp.toString() == "") {
-                add.visibility = View.GONE
+                add!!.visibility = View.GONE
             }
             selectall()
         }
@@ -119,26 +128,26 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             val animation = AnimationUtils.loadAnimation(context!!, R.anim.fade_out)
             men.startAnimation(animation)
             men.visibility = View.GONE
-            add.visibility = View.VISIBLE
+            add!!.visibility = View.VISIBLE
             if (myacc!!.comp.toString() == "") {
-                add.visibility = View.GONE
+                add!!.visibility = View.GONE
             }
             deselectall()
         }
         men.visibility = View.INVISIBLE
         filtbtn.setOnClickListener {
             filtbtn.visibility = View.GONE
-            add.visibility = View.GONE
+            add!!.visibility = View.GONE
             men.visibility = View.VISIBLE
             if (myacc!!.comp.toString() == "") {
-                add.visibility = View.GONE
+                add!!.visibility = View.GONE
             }
             val animation = AnimationUtils.loadAnimation(context!!, R.anim.fade_in)
             men.startAnimation(animation)
         }
 
 
-        add.setOnClickListener {
+        add!!.setOnClickListener {
             Log.i("Here", "yeap, toast shown")
             //Toast.makeText(this, "Add point here", Toast.LENGTH_LONG).show()
             Add_Point()
@@ -339,6 +348,17 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     var tags = "111111"
     var myDialog: Dialog? = null
     fun updatepunkts() {
+
+        if (myacc!!.comp.toString() == "") {
+            add!!.visibility = View.GONE
+
+        }
+        else
+        {
+            add!!.visibility = View.VISIBLE
+
+
+        }
         mMap.clear()
         for (i in mapViewModel.punkts) {
             if (!checkifmatches(i.whatfor!!)) continue

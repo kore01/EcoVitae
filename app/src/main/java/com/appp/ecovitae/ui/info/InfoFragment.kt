@@ -1,4 +1,4 @@
-package com.appp.ecovitae.ui.map
+package com.appp.ecovitae.ui.info
 
 import android.Manifest
 import android.annotation.SuppressLint

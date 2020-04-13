@@ -27,7 +27,9 @@ import com.appp.ecovitae.DataModel.Levels.LevelsModel
 import com.appp.ecovitae.DataModel.NewsFeed.NewsFeedModel
 import com.appp.ecovitae.DataModel.Punkts.PunktsModel
 import com.appp.ecovitae.DataModel.Shops.ShopsModel
-import com.appp.ecovitae.ui.map.InfoViewModel
+import com.appp.ecovitae.DataModel.Tips.TipModel
+import com.appp.ecovitae.ui.info.InfoViewModel
+import com.appp.ecovitae.ui.tips.TipsViewModel
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -109,10 +111,12 @@ class Main2Activity : AppCompatActivity(), Observer {
 
     var updated: Int by Delegates.observable(0) { property, oldValue, newValue ->
 
+        Log.i("updated", "upd?")
         val navController = findNavController(R.id.nav_host_fragment)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         menu = findViewById(R.id.circle_menu)
+        updatelevels()
 
         if (FirebaseAuth.getInstance().currentUser != null) {
 
@@ -132,6 +136,7 @@ class Main2Activity : AppCompatActivity(), Observer {
             navView.visibility = View.GONE
             menu!!.visibility = View.GONE
         }
+
     }
 
     var users = AccountsModel.getDataAccounts()!!
@@ -139,7 +144,7 @@ class Main2Activity : AppCompatActivity(), Observer {
     var companies = CompanyModel.getDataCompany()!!
     var shops = ShopsModel.getData()!!
     var bonuses = BonusModel.getDataBonus()!!
-    //var
+    var tips = TipModel.getDataTip()!!
 
     var punkts = PunktsModel.getData()!!
     var levels = LevelsModel.getDataLevels()!!
@@ -173,6 +178,8 @@ class Main2Activity : AppCompatActivity(), Observer {
         ShopsModel.addObserver(this)
         BonusModel
         BonusModel.addObserver(this)
+        TipModel
+        TipModel.addObserver(this)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -217,7 +224,7 @@ class Main2Activity : AppCompatActivity(), Observer {
                 }
                 if (index == 2) {
                     Log.i("index", "calculator")
-                    //navController.navigate(R.id.nav_gallery)
+                    navController.navigate(R.id.nav_info)
                 }
                 if (index == 3) {
                     Log.i("index", "profile")
@@ -255,19 +262,6 @@ class Main2Activity : AppCompatActivity(), Observer {
                 R.id.nav_info
             ), drawerLayout
         )
-
-        //  }
-
-        /*else
-        {
-            Log.i("should be here", "fdaksva")
-            appBarConfiguration = AppBarConfiguration(
-                setOf(
-                    R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                    R.id.nav_tools, R.id.nav_share, R.id.nav_send
-                ), drawerLayout
-            )
-        }*/
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -516,6 +510,7 @@ class Main2Activity : AppCompatActivity(), Observer {
     override fun onResume() {
         super.onResume()
         Log.i("on resume", "resume")
+        updated++
     }
 
 
@@ -632,6 +627,7 @@ class Main2Activity : AppCompatActivity(), Observer {
         levels = LevelsModel.getDataLevels()!!
         shops = ShopsModel.getData()!!
         bonuses = BonusModel.getDataBonus()!!
+        tips = TipModel.getDataTip()!!
 
         Log.i("users", users.size.toString())
 
@@ -692,14 +688,9 @@ class Main2Activity : AppCompatActivity(), Observer {
                     acc.rate = ds.child("rating").getValue(String::class.java)!!.toInt()
                     var num = ds.child("company").getValue(String::class.java)
                     Log.i("companiiiies", num.toString())
-                    var str: String = ""
-                    if (num == "") {
-                        Log.i("hhhhhh", "tttttt")
-                        str = ""
-                    } //else str = companies[num!!.toInt() - 1].name + " "
-                    //Log.i("companiiiis", i.comp)
 
-                    acc.comp = str
+
+                    acc.comp = ds.child("company").getValue(String::class.java)
                     Log.i("companies", acc.comp)
 
                     Log.i("level", acc.points.toString())

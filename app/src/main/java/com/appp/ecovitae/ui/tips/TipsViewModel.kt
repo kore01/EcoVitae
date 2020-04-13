@@ -1,4 +1,4 @@
-package com.appp.ecovitae.ui.send
+package com.appp.ecovitae.ui.tips
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

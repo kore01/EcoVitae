@@ -3,7 +3,7 @@
     android:layout_width="300dp"
     android:layout_height="575dp"
     android:layout_gravity="center"
-    android:background="#BED3F1F5"
+    android:background="#DCC5F3C8"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -26,7 +26,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Добавете кошче на локацията си"
-            android:textAppearance="@style/title" />
+            android:textAppearance="@style/title"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtclose"
@@ -276,12 +277,13 @@
 
     <Button
         android:id="@+id/btn_add"
+        style="@style/FirebaseUI.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/et_password"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:background="#A600BCD4"
+        android:background="@color/colorAccent"
         android:foregroundGravity="center|center_horizontal"
         android:gravity="center|center_horizontal"
         android:text="Добавете"

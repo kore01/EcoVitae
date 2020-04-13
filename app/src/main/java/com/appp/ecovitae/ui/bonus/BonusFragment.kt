@@ -40,15 +40,12 @@ class BonusFragment : Fragment() {
         Log.i("Bonuses size", (activity as Main2Activity).bonuses.size.toString())
         var adapter =
             BonusAdapter((activity as Main2Activity), (activity as Main2Activity).bonuses)
-
-
         //Log.i("modelarraylist", modelArrayList!!.size.toString() + "fdasfa")
         bonusView!!.adapter = adapter
 
         bonusView!!.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
-                // This is your listview's selected item
-                // val item = parent.getItemAtPosition(position)
+                Log.i("bonuss", "why????")
                 (activity as Main2Activity).bonusss=
                     (activity as Main2Activity).bonuses[position].id.toString()
             }

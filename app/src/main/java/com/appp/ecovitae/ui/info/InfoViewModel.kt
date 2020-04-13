@@ -1,4 +1,4 @@
-package com.appp.ecovitae.ui.map
+package com.appp.ecovitae.ui.info
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
