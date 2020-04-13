@@ -64,7 +64,7 @@
             android:layout_marginRight="30dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="1.5"
-            android:background="#00BCD4"
+            android:background="#D8419945"
             android:foregroundGravity="bottom"
             android:text="Изхвърли"
             android:textAppearance="@style/txt_expandable" />

@@ -9,9 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -23,14 +21,13 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.appp.ecovitae.DataModel.Accounts.AccountsModel
 import com.appp.ecovitae.DataModel.Accounts.MyAccount
-import com.appp.ecovitae.DataModel.Bonus.Bonus
 import com.appp.ecovitae.DataModel.Bonus.BonusModel
 import com.appp.ecovitae.DataModel.Company.CompanyModel
 import com.appp.ecovitae.DataModel.Levels.LevelsModel
 import com.appp.ecovitae.DataModel.NewsFeed.NewsFeedModel
 import com.appp.ecovitae.DataModel.Punkts.PunktsModel
 import com.appp.ecovitae.DataModel.Shops.ShopsModel
-import com.appp.ecovitae.ui.map.MapViewModel
+import com.appp.ecovitae.ui.map.InfoViewModel
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -52,7 +49,10 @@ class Main2Activity : AppCompatActivity(), Observer {
     private var lastLocation: Location? = null
     private lateinit var appBarConfiguration: AppBarConfiguration
     var myDialog: Dialog? = null
-    private lateinit var mapViewModel: MapViewModel
+    var slide: ProgressBar? = null
+    private var lfrom: Button? = null
+    private var lto: Button? = null
+    private lateinit var mapViewModel: InfoViewModel
 
 
     var observed = false
@@ -61,6 +61,7 @@ class Main2Activity : AppCompatActivity(), Observer {
         val navController = findNavController(R.id.nav_host_fragment)
         navController.navigate(R.id.nav_news)
         Log.i("newsss", newsss.toString())
+        updatelevels()
     }
 
 
@@ -69,6 +70,7 @@ class Main2Activity : AppCompatActivity(), Observer {
         val navController = findNavController(R.id.nav_host_fragment)
         Log.i("shopsss", shopsss.toString())
         navController.navigate(R.id.nav_shop)
+        updatelevels()
 
     }
 
@@ -142,6 +144,7 @@ class Main2Activity : AppCompatActivity(), Observer {
     var punkts = PunktsModel.getData()!!
     var levels = LevelsModel.getDataLevels()!!
     var menu: CircleMenuView? = null
+    var header: View? = null
     var isFABOpen = false
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i("on create", "create")
@@ -152,8 +155,10 @@ class Main2Activity : AppCompatActivity(), Observer {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
-
-
+        var header = navView.getHeaderView(0) as LinearLayout
+        slide = header.findViewById(R.id.progress)
+        lfrom = header.findViewById(R.id.lvfrom)
+        lto = header.findViewById(R.id.lvto)
         AccountsModel
         AccountsModel.addObserver(this)
         CompanyModel
@@ -246,7 +251,8 @@ class Main2Activity : AppCompatActivity(), Observer {
                 R.id.nav_slideshow,
                 R.id.nav_shop,
                 R.id.nav_onebonus,
-                R.id.nav_news
+                R.id.nav_news,
+                R.id.nav_info
             ), drawerLayout
         )
 
@@ -272,6 +278,7 @@ class Main2Activity : AppCompatActivity(), Observer {
             Log.i("sss", ss)
             openDialThrow(ss)
         }
+        updatelevels()
 
     }
 
@@ -362,11 +369,12 @@ class Main2Activity : AppCompatActivity(), Observer {
             myDialog!!.dismiss()
         }
         mapViewModel =
-            ViewModelProviders.of(this).get(MapViewModel::class.java)
+            ViewModelProviders.of(this).get(InfoViewModel::class.java)
 
 
         var btnthrow: Button = myDialog!!.findViewById(R.id.throwout)
         btnthrow.setOnClickListener {
+            Log.i("Throw button", "click")
             var res = throwin()
             if (res == true) {
                 myDialog!!.dismiss()
@@ -374,8 +382,8 @@ class Main2Activity : AppCompatActivity(), Observer {
                 Log.i("yeap", "it worked")
 
             } else {
+                Toast.makeText(this, "Моля, приближете се до контейнера.", Toast.LENGTH_LONG).show()
                 Log.i("too far", "opa")
-
             }
         }
 
@@ -441,6 +449,7 @@ class Main2Activity : AppCompatActivity(), Observer {
 
 
     fun throwin(): Boolean {
+        Log.i("Throw", "throw in")
         updated++
 
         for (i in mapViewModel.punkts) {
@@ -464,8 +473,9 @@ class Main2Activity : AppCompatActivity(), Observer {
             Log.i("distance: ", dist.toString())
             if (dist > 7) continue
 
-            acc.points = acc.points!! + 5
+            acc.points = acc.points!! + 1
             acc.coins = acc.coins!! + 5
+            acc.bin = acc.bin!! + 1
             updateacc()
             return true
         }
@@ -645,6 +655,7 @@ class Main2Activity : AppCompatActivity(), Observer {
             updated++
             br++
         }
+        updatelevels()
 
     }
 
@@ -691,6 +702,7 @@ class Main2Activity : AppCompatActivity(), Observer {
                     acc.comp = str
                     Log.i("companies", acc.comp)
 
+                    Log.i("level", acc.points.toString())
                     acc.level = what_levell(acc.points!!.toInt())
                     Log.i("what level", acc.level.toString())
                     Log.i("email?", acc.email)
@@ -708,10 +720,43 @@ class Main2Activity : AppCompatActivity(), Observer {
     }
 
     fun what_levell(points: Int): Int {
+        Log.i("what_Level_points", points.toString())
+        Log.i("what_level_numb", acc.points.toString())
+
         for (i in levels) {
-            if (i.points!!.toInt() < points) continue
-            else return i.id!!.toInt() - 1
+            if (i.points!!.toInt() <= points) continue
+            Log.i("Level id is", i.id)
+            return i.id!!.toInt() - 1
         }
         return 1
     }
+
+    fun updatelevels() {
+        var levell = acc.level!!
+        Log.i("what level main???", levell.toString())
+        if (levell < 2) {
+
+            slide!!.max = 2
+            slide!!.progress = 1
+
+            return
+        }
+
+        lfrom!!.text = levell.toString()
+        lto!!.text = (levell!! + 1).toString()
+
+
+        var pointsfrom = levels[levell - 1].points!!.toInt() + 1
+        var slidemax = levels[levell].points!!.toInt() - pointsfrom + 1
+        var slideprogress = acc.points!! - pointsfrom + 1
+        slide!!.max = slidemax
+        slide!!.progress = slideprogress
+//        updatelevels()
+
+
+        Log.i("pointsfrom", pointsfrom.toString())
+        //slide!!.max = 10
+        //slide!!.progress = 6
+    }
+
 }

@@ -1,4 +1,4 @@
- package com.appp.ecovitae.Adapter
+package com.appp.ecovitae.Adapter
 
 import android.content.Context
 import android.util.Log
@@ -72,12 +72,11 @@ class ShopsAdapter(private val context: Context, modelArrayList: ArrayList<Shops
 
 
         //var myurl =
-         val gsReference =
+        /* val gsReference =
             storage.getReferenceFromUrl(modelArrayList[position].image!!.toUri().toString())
-
         GlideApp.with(context)
             .load(gsReference)
-            .into(holder.image!!)
+            .into(holder.image!!)*/
 
         holder.title!!.text = modelArrayList[position].name
         holder.text!!.text = modelArrayList[position].desc!!.take(80)

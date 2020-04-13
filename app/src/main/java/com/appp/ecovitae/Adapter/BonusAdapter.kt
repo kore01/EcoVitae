@@ -9,9 +9,7 @@ import android.widget.*
 import androidx.core.net.toUri
 import com.appp.ecovitae.CheckBoxList
 import com.appp.ecovitae.DataModel.Bonus.Bonus
-import com.appp.ecovitae.DataModel.Shops.Shops
 import com.appp.ecovitae.GlideApp
-import com.appp.ecovitae.Main2Activity
 import com.appp.ecovitae.R
 import com.google.firebase.storage.FirebaseStorage
 

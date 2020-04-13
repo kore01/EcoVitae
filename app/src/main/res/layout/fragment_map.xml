@@ -35,7 +35,7 @@
         android:layout_width="237dp"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:background="#161FD7EE"
+        android:background="#57419945"
         android:orientation="vertical">
 
         <LinearLayout
@@ -50,7 +50,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:background="#5100BCD4"
+                android:background="#794CAF50"
                 android:text="Избери всички" />
 
             <Button
@@ -59,7 +59,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:background="#5100BCD4"
+                android:background="#784CAF50"
+                android:padding="5px"
                 android:text="Изчистване на избора" />
 
 
@@ -79,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="#5100BCD4"
+            android:background="#784CAF50"
             android:text="Обнови" />
 
     </LinearLayout>
@@ -95,7 +96,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="10dp"
-            android:background="#2700BCD4"
+            android:background="#5742A753"
             android:visibility="visible"
             app:srcCompat="@drawable/ic_filter" />
 
@@ -108,7 +109,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="10dp"
-            android:background="#2700BCD4"
+            android:background="#5742A753"
             android:visibility="visible"
             app:srcCompat="@drawable/ic_add" />
 

@@ -22,6 +22,7 @@ class HomeFragment : Fragment() {
     private var lfrom: Button? = null
     private var lto: Button? = null
     private var pointstonext: TextView? = null
+    private var equalss: TextView? = null
     private var slide: ProgressBar? = null
     private lateinit var homeViewModel: HomeViewModel
     private var adapter: NewsFeedAdapter? = null
@@ -38,6 +39,7 @@ class HomeFragment : Fragment() {
 
         lfrom = root.findViewById(R.id.lvfrom)
         pointstonext = root.findViewById(R.id.nextlevel)
+        equalss = root.findViewById(R.id.equals)
         lto = root.findViewById(R.id.lvto)
         slide = root.findViewById(R.id.progress)
         homeViewModel.text.observe(this, Observer {
@@ -45,14 +47,12 @@ class HomeFragment : Fragment() {
         })
 
 
-
-
         var levell = (activity as Main2Activity).acc.level
+        updatelevel()
 
-        if (levell!! >= 1) {
 
-            updatelevel()
-        }
+
+
 
         if ((activity as Main2Activity).news.size > 0) {
             Log.i("main2news", (activity as Main2Activity).news.size.toString())
@@ -81,7 +81,7 @@ class HomeFragment : Fragment() {
         if (result != null) {
 
             if (result.contents != null) {
-              //  scannedResult = result.contents
+                //  scannedResult = result.contents
 
             } else {
 
@@ -95,6 +95,7 @@ class HomeFragment : Fragment() {
     var levell = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.i("ctrate view", "view")
         if ((activity as Main2Activity).news.size > 0) {
             Log.i("main2news", (activity as Main2Activity).news.size.toString())
             adapter =
@@ -105,24 +106,37 @@ class HomeFragment : Fragment() {
 
         }
 
-        if (levell >= 1) {
-            updatelevel()
-        }
+        updatelevel()
     }
 
     fun updatelevel() {
-        var levell = (activity as Main2Activity).acc.level
+
+        (activity as Main2Activity).updatelevels()
+
+        levell = (activity as Main2Activity).acc.level!!
+        Log.i("what level???", levell.toString())
+        if (levell < 2) {
+
+            slide!!.max = 2
+            slide!!.progress = 1
+            pointstonext!!.text = "  Точки до следващото ниво: " + (1).toString()
+
+            return
+        }
+
         lfrom!!.text = levell.toString()
         lto!!.text = (levell!! + 1).toString()
 
 
-        var pointsfrom = (activity as Main2Activity).levels[levell - 1].points!!.toInt()
-        var slidemax = (activity as Main2Activity).levels[levell].points!!.toInt() - pointsfrom
-        var slideprogress = (activity as Main2Activity).acc.points!! - pointsfrom
+        var pointsfrom = (activity as Main2Activity).levels[levell - 1].points!!.toInt() + 1
+        var slidemax = (activity as Main2Activity).levels[levell].points!!.toInt() - pointsfrom + 1
+        var slideprogress = (activity as Main2Activity).acc.points!! - pointsfrom + 1
         slide!!.max = slidemax
         slide!!.progress = slideprogress
 
-        pointstonext!!.text = "  Точки до следващото ниво: " + (slidemax - slideprogress).toString()
+        pointstonext!!.text = "Точки до следващото ниво: " + (slidemax - slideprogress).toString()
+        equalss!!.text = "Това се равнява на енергията за захранването на компютър за " + ((activity as Main2Activity).acc.bin!! *25).toString()  + " минути."
+
 
         Log.i("pointsfrom", pointsfrom.toString())
         Log.i("my points", (activity as Main2Activity).acc.points.toString())

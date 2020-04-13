@@ -43,7 +43,7 @@ import java.util.ArrayList
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
-    private lateinit var mapViewModel: MapViewModel
+    private lateinit var mapViewModel: InfoViewModel
     lateinit var mMap: GoogleMap
     lateinit var mFusedLocationClient: FusedLocationProviderClient
 
@@ -60,7 +60,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
         mapViewModel =
-            ViewModelProviders.of(this).get(MapViewModel::class.java)
+            ViewModelProviders.of(this).get(InfoViewModel::class.java)
         val root = inflater.inflate(layout.fragment_map, container, false)
         var upd: Button = root.findViewById(R.id.update)
         var sel: Button = root.findViewById(R.id.select)

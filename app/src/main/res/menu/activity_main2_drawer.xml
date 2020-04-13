@@ -27,9 +27,9 @@
     <item android:title="Информация">
         <menu>
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_send" />
+                android:id="@+id/nav_info"
+                android:icon="@drawable/ic_menu_tips"
+                android:title="@string/menu_info" />
 
             <item
                 android:id="@+id/nav_tips"

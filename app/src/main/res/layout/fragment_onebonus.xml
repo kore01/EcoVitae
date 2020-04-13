@@ -122,7 +122,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="#A600BCD4"
+                android:background="@color/colorAccent"
                 android:foregroundGravity="center|center_horizontal"
                 android:gravity="center|center_horizontal"
                 android:text="  Още бонуси от този партньор  "

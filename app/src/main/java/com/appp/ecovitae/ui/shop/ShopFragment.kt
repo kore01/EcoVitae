@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.appp.ecovitae.Adapter.BonusAdapter
 import com.appp.ecovitae.DataModel.Bonus.Bonus
+import com.appp.ecovitae.DataModel.Shops.MyBonus
 import com.appp.ecovitae.DataModel.Shops.Shops
 import com.appp.ecovitae.GlideApp
 import com.appp.ecovitae.Main2Activity
