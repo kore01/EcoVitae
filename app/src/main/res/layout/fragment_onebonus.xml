@@ -43,17 +43,18 @@
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:text="TextView" />
+
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView18"
+            <Button
+                android:id="@+id/use"
+                style="@style/FirebaseUI.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="center"
-                android:text="Партньор"
-                android:textAppearance="@style/title" />
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="80dp"
+                android:text="Използване" />
 
             <TextView
                 android:id="@+id/partner"

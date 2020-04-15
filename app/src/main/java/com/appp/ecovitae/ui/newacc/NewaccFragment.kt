@@ -32,7 +32,7 @@ import com.synnapps.carouselview.CarouselView
 import com.synnapps.carouselview.ImageListener
 import org.json.JSONArray
 
-class NewaccFragment : Fragment(){
+class NewaccFragment : Fragment() {
 
     private lateinit var newaccModel: NewaccModel
 
@@ -55,11 +55,11 @@ class NewaccFragment : Fragment(){
     private var SITE_KEY = "6Lemy94UAAAAANJydwzCy04m_9IQQn9swHZiYWsJ"
 
     var sampleImages = intArrayOf(
-        R.drawable.ic_add,
-        R.drawable.ic_calculator,
-        R.drawable.ic_filter,
-        R.drawable.ic_home,
-        R.drawable.ic_map
+        R.mipmap.ic_launcher,
+        R.mipmap.ic_launcher,
+        R.mipmap.ic_launcher,
+        R.mipmap.ic_launcher,
+        R.mipmap.ic_launcher
     )
 
     override fun onCreateView(
@@ -88,21 +88,22 @@ class NewaccFragment : Fragment(){
         mAuth = FirebaseAuth.getInstance()
 
 
-
-
         val btn2: Button = root.findViewById(R.id.btn_register)
         btn2.setOnClickListener {
 
             SafetyNet.getClient(activity as Main2Activity).verifyWithRecaptcha(SITE_KEY)
                 .addOnSuccessListener(activity as Main2Activity) { response ->
                     if (!response.tokenResult.isEmpty()) {
-                        Log.i("response",  "responded")
+                        Log.i("response", "responded")
                         handleVerify(response.tokenResult)
                     }
                 }
                 .addOnFailureListener(activity as Main2Activity) { e ->
                     if (e is ApiException) {
-                        Log.d(TAG,("Error message: " + CommonStatusCodes.getStatusCodeString(e.statusCode)))
+                        Log.d(
+                            TAG,
+                            ("Error message: " + CommonStatusCodes.getStatusCodeString(e.statusCode))
+                        )
                     } else {
                         Log.d(TAG, "Unknown type of error: " + e.message)
                     }

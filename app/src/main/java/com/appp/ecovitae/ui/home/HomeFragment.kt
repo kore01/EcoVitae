@@ -27,6 +27,9 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private var adapter: NewsFeedAdapter? = null
     var newsView: ListView? = null
+    var daytip: TextView? = null
+    var rnds = 0
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,10 +45,18 @@ class HomeFragment : Fragment() {
         equalss = root.findViewById(R.id.equals)
         lto = root.findViewById(R.id.lvto)
         slide = root.findViewById(R.id.progress)
+        daytip = root.findViewById(R.id.tip)
         homeViewModel.text.observe(this, Observer {
             Log.i("fdas", "fdasfdasfdshgdf")
         })
 
+
+
+        if ((activity as Main2Activity).tips.size != 0) {
+            rnds = (1..(activity as Main2Activity).tips.size).random()
+            rnds--
+            daytip!!.text = (activity as Main2Activity).tips[rnds].desc
+        }
 
         var levell = (activity as Main2Activity).acc.level
         updatelevel()
@@ -106,6 +117,11 @@ class HomeFragment : Fragment() {
 
         }
 
+        if ((activity as Main2Activity).tips.size != 0) {
+            rnds = (1..(activity as Main2Activity).tips.size).random()
+            rnds--
+            daytip!!.text = (activity as Main2Activity).tips[rnds].desc
+        }
         updatelevel()
     }
 
@@ -115,12 +131,12 @@ class HomeFragment : Fragment() {
 
         levell = (activity as Main2Activity).acc.level!!
         Log.i("what level???", levell.toString())
+        Log.i("what level???", (activity as Main2Activity).acc.points.toString())
         if (levell < 2) {
-
             slide!!.max = 2
             slide!!.progress = 1
             pointstonext!!.text = "  Точки до следващото ниво: " + (1).toString()
-
+            equalss!!.text = "Все още не сте спестили енергия!"
             return
         }
 
@@ -135,7 +151,8 @@ class HomeFragment : Fragment() {
         slide!!.progress = slideprogress
 
         pointstonext!!.text = "Точки до следващото ниво: " + (slidemax - slideprogress).toString()
-        equalss!!.text = "Това се равнява на енергията за захранването на компютър за " + ((activity as Main2Activity).acc.bin!! *25).toString()  + " минути."
+        equalss!!.text =
+            "Това се равнява на енергията за захранването на компютър за " + ((activity as Main2Activity).acc.bin!! * 25).toString() + " минути."
 
 
         Log.i("pointsfrom", pointsfrom.toString())

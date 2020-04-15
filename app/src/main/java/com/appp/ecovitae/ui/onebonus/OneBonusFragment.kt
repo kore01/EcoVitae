@@ -1,9 +1,11 @@
 package com.appp.ecovitae.ui.send
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
@@ -86,6 +88,26 @@ class OneBonusFragment : Fragment(), OnMapReadyCallback {
 
         mapFragment?.getMapAsync(this)
 
+        val check_out: Button = root.findViewById(R.id.btn_check_out)
+        check_out.setOnClickListener {
+            (activity as Main2Activity).shopsss = shop.id.toString()
+        }
+
+        val use: Button = root.findViewById(R.id.use)
+        use.setOnClickListener {
+            var myacc = (activity as Main2Activity).acc
+            if(myacc.coins!! >= bonus.price!!.toInt())
+            {
+                (activity as Main2Activity).acc.coins = (activity as Main2Activity).acc.coins!! - bonus.price!!.toInt()
+                (activity as Main2Activity).updateacc()
+                Log.i("bonus?", bonus.name+" "+bonus.desc)
+                (activity as Main2Activity).DoYes(bonus.name!!, bonus.desc!!)
+            }
+            if(myacc.coins!!.toInt() < bonus.price!!.toInt())
+            {
+                (activity as Main2Activity).DoNo();
+            }
+        }
 
 
         return root

@@ -51,6 +51,7 @@ class Main2Activity : AppCompatActivity(), Observer {
     private var lastLocation: Location? = null
     private lateinit var appBarConfiguration: AppBarConfiguration
     var myDialog: Dialog? = null
+    var DialYes: Dialog? = null
     var slide: ProgressBar? = null
     private var lfrom: Button? = null
     private var lto: Button? = null
@@ -75,7 +76,6 @@ class Main2Activity : AppCompatActivity(), Observer {
         updatelevels()
 
     }
-
     var bonusss: String by Delegates.observable(" ") { property, oldValue, newValue ->
         observed = true
         val navController = findNavController(R.id.nav_host_fragment)
@@ -149,7 +149,6 @@ class Main2Activity : AppCompatActivity(), Observer {
     var punkts = PunktsModel.getData()!!
     var levels = LevelsModel.getDataLevels()!!
     var menu: CircleMenuView? = null
-    var header: View? = null
     var isFABOpen = false
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i("on create", "create")
@@ -267,6 +266,7 @@ class Main2Activity : AppCompatActivity(), Observer {
         navView.setupWithNavController(navController)
 
         myDialog = Dialog(this)
+        DialYes = Dialog(this)
         val ss = intent.getStringExtra("barcode")
         if (ss != null) {
             Log.i("sss", ss)
@@ -441,6 +441,40 @@ class Main2Activity : AppCompatActivity(), Observer {
         myDialog!!.show()
     }
 
+    fun DoYes(name1: String, desc1: String) {
+
+        DialYes!!.setContentView(R.layout.dial_yes)
+
+        val nam: TextView = DialYes!!.findViewById(R.id.name1)
+        nam.text = name1
+        Log.i("bonus?", nam.text as String)
+
+        val des: TextView = DialYes!!.findViewById(R.id.desc1)
+        des.text = desc1
+        Log.i("bonus?", des.text as String)
+
+        val txtclose: TextView = DialYes!!.findViewById(R.id.txtclose)
+        txtclose.text = "X"
+        txtclose.setOnClickListener {
+            DialYes!!.dismiss()
+        }
+
+        Log.i("bonus?", name1+" "+desc1)
+
+        DialYes!!.show()
+    }
+
+    fun DoNo() {
+
+        myDialog!!.setContentView(R.layout.dial_no)
+
+        val txtclose: TextView = myDialog!!.findViewById(R.id.txtclose)
+        txtclose.text = "X"
+        txtclose.setOnClickListener {
+            myDialog!!.dismiss()
+        }
+        myDialog!!.show()
+    }
 
     fun throwin(): Boolean {
         Log.i("Throw", "throw in")
@@ -576,7 +610,7 @@ class Main2Activity : AppCompatActivity(), Observer {
         ordersRef.addListenerForSingleValueEvent(valueEventListener)
     }
 
-    private fun updateacc() {
+    fun updateacc() {
 
 
         var firebaseData = FirebaseDatabase.getInstance().reference
@@ -588,6 +622,8 @@ class Main2Activity : AppCompatActivity(), Observer {
             .setValue(acc.bin.toString())
         firebaseData.child("Users").child(acc.id.toString()).child("rating")
             .setValue(acc.rate.toString())
+        firebaseData.child("Users").child(acc.id.toString()).child("company")
+            .setValue(acc.comp.toString())
     }
 
 

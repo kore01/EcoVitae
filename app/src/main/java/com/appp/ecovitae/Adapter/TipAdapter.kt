@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
@@ -60,6 +61,9 @@ class TipAdapter(private val context: Context, modelArrayList: ArrayList<Tip>) :
 
             //holder.shop = convertView!!.findViewById(R.id.shop) as TextView
             holder.text = convertView.findViewById(R.id.text) as TextView
+            holder.check = convertView.findViewById(R.id.checkBox) as CheckBox
+            holder.pointss = convertView.findViewById(R.id.pointss) as TextView
+
             convertView.tag = holder
         } else {
             // the getTag returns the viewHolder object set as a tag to the view
@@ -68,17 +72,25 @@ class TipAdapter(private val context: Context, modelArrayList: ArrayList<Tip>) :
 
         holder.text!!.text = modelArrayList[position].desc
 
+        holder.pointss!!.text = modelArrayList[position].points!!
+
         return convertView!!
     }
 
     private inner class ViewHolder {
 
-        var title: TextView? = null
+        var pointss: TextView? = null
         var text: TextView? = null
+        var check: CheckBox? = null
     }
+
 
     companion object {
         lateinit var public_modelArrayList: ArrayList<CheckBoxList>
     }
+
+
+
+
 
 }
